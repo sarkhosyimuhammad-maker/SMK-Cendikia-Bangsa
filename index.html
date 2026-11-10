@@ -3,22 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPL Digital Realtime - SMK Cendikia Bangsa</title>
-    
-    <script>
-        // MASUKKAN LINK CSV GOOGLE SHEETS ANDA PERMANEN DI SINI
-        const DEFAULT_SHEETS_URL = "https://google.com"; 
-    </script>
-
-    <!-- Tailwind CSS untuk Desain Modern & Responsif -->
-    <script src="https://tailwindcss.com"></script>
+    <title>E-SPP Realtime - SMK Cendikia Bangsa</title>
+    <!-- Tailwind CSS via CDN Terverifikasi untuk Keamanan Layout Responsif -->
+    <script src="https://cdn.tailwindcss.com">https://docs.google.com/spreadsheets/d/e/2PACX-1vRYMHxS9j9esRF_7_WJwGmCtjgIf55X9Blv5jiZBaQCswa4xuRXRyjniVyoMOSiuZk3IkHpDW4OqiCx/pub?output=csv</script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#1e40af', // DIUBAH: Biru Tua Royal untuk SMK
-                        secondary: '#3b82f6' // DIUBAH: Biru Terang variasi
+                        brandPrimary: '#1e3a8a', // Deep Navy
+                        brandSecondary: '#3b82f6', // Royal Blue
+                        brandAccent: '#d97706' // Gold/Amber Accent
                     }
                 }
             }
@@ -33,135 +28,1054 @@
             background: #f1f1f1;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #888;
+            background: #3b82f6;
             border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #555;
         }
         .dropdown-menu-kustom {
             max-height: 240px;
             overflow-y: auto;
         }
-    </script>
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans antialiased min-h-screen pb-12">
+<body class="bg-slate-50 text-gray-800 font-sans antialiased min-h-screen flex flex-col justify-between">
 
-    <!-- Header Utama Aplikasi (DIUBAH: Menggunakan Gradasi Biru ke Indigo yang Gagah) -->
-    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-md sticky top-0 z-40">
-        <div class="max-w-6xl mx-auto px-3 py-3 flex justify-between items-center gap-2">
-            <div class="flex items-center space-x-2.5">
-                <!-- DIUBAH: Ikon disesuaikan warna biru -->
-                <div class="bg-white p-1.5 rounded-full text-blue-700 shadow-inner">
-                    <svg xmlns="http://w3.org" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
+    <!-- Kontainer Atas untuk Konten Utama -->
+    <div>
+        <!-- Header Utama Aplikasi Sekolah dengan Logo Dinamis -->
+        <header class="bg-gradient-to-r from-blue-950 via-indigo-950 to-slate-900 text-white shadow-lg sticky top-0 z-40 border-b-2 border-amber-500">
+            <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+                
+                <!-- Kombinasi Logo dan Judul Aplikasi -->
+                <div class="flex items-center space-x-3.5">
+                    <!-- Wadah Logo Sekolah (Mendukung SVG Bawaan / Gambar JPEG/PNG yang Diupload) -->
+                    <div id="logo-container" class="bg-white p-1 rounded-full shadow-md flex-shrink-0 flex items-center justify-center border border-amber-400 h-11 w-11 overflow-hidden">
+                        <svg id="default-svg-logo" class="h-9 w-9 text-[#1e90ff]" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Segilima Lambang Dasar -->
+                            <polygon points="50,5 93,36 77,88 23,88 7,36" fill="#1e90ff" stroke="#1e3a8a" stroke-width="2"/>
+                            <!-- Sayap dan Buku Merpati Putih -->
+                            <path d="M50,25 C55,40 85,45 85,65 C85,75 75,80 50,75 C25,80 15,75 15,65 C15,45 45,40 50,25 Z" fill="#ffffff"/>
+                            <!-- Obor Api Emas di Tengah -->
+                            <path d="M50,40 C45,52 48,65 50,70 C52,65 55,52 50,40 Z" fill="#d97706"/>
+                            <path d="M50,45 C48,52 49,60 50,65 C51,60 52,52 50,45 Z" fill="#f59e0b"/>
+                            <!-- Buku Terbuka di Bagian Bawah -->
+                            <path d="M30,80 Q50,75 50,83 Q50,75 70,80" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+                            <!-- Teks Melingkar Tut Wuri Handayani -->
+                            <path d="M20,22 Q50,5 80,22" fill="none" id="textPath"/>
+                            <text font-size="8" font-family="sans-serif" font-weight="bold" fill="#ffffff" text-anchor="middle">
+                                <textPath href="#textPath" startOffset="50%">TUT WURI HANDAYANI</textPath>
+                            </text>
+                        </svg>
+                    </div>
+
+                    <div>
+                        <h1 class="text-sm sm:text-base font-black tracking-wide uppercase text-amber-400">SMK Cendikia Bangsa</h1>
+                        <p class="text-[10px] text-slate-300 font-semibold tracking-wider">Sistem Informasi SPP & Administrasi Siswa</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="text-lg font-bold tracking-wide">SMK Cendikia Bangsa</h1>
-                    <p class="text-[10px] text-blue-100 opacity-90">Sistem Informasi Database Realtime</p>
+                
+                <!-- Tombol Keluar / Logout (Hanya muncul jika sudah login) -->
+                <div class="flex items-center space-x-3">
+                    <button id="btn-logout" onclick="logoutSistemAplikasi()" class="hidden text-[11px] bg-red-700/80 hover:bg-red-800 text-white font-bold px-3 py-1.5 rounded-lg border border-red-600 transition-colors">
+                        Keluar
+                    </button>
+                    <div class="text-right hidden sm:block">
+                        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Tahun Ajaran</p>
+                        <p class="text-xs font-bold text-white bg-slate-800/80 px-2.5 py-0.5 rounded border border-slate-700">2026 / 2027</p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="flex items-center space-x-2">
-                <!-- DIUBAH: Tombol refresh mengikuti warna tema biru -->
-                <button onclick="paksaRefreshDataWarga()" title="Segarkan Data Terkini" class="p-2 bg-blue-800 hover:bg-blue-900 rounded-lg text-white shadow transition-colors flex items-center justify-center">
-                    <svg xmlns="http://w3.org" class="h-4 w-4 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.253 8H18" />
-                    </svg>
+        </header>
+
+        <!-- Navigasi Tab Utama (Memisahkan Area Data dan Menu Utama) -->
+        <div id="navigation-tabs-bar" class="bg-white border-b border-slate-200 sticky top-[62px] z-30 shadow-sm hidden">
+            <div class="max-w-4xl mx-auto px-3 flex space-x-1">
+                <button onclick="gantiTabAplikasi('tab-warga-pencarian')" id="btn-tab-warga" class="py-3 px-4 text-xs font-black uppercase tracking-wider border-b-2 border-blue-800 text-blue-900 flex items-center gap-1.5 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                    Pencarian & Data Murid
+                </button>
+                <button onclick="gantiTabAplikasi('tab-master-pengaturan')" id="btn-tab-master" class="py-3 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    Master Akun & Logo Sekolah
                 </button>
             </div>
         </div>
-    </header>
 
-    <!-- Konten Utama Bodi -->
-    <main class="max-w-4xl mx-auto px-3 mt-4">
-        
-        <!-- Notifikasi Toast -->
-        <div id="toast-notification" class="hidden fixed bottom-5 right-5 left-5 sm:left-auto bg-gray-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center justify-between space-x-4 transition-all duration-300 z-50">
-            <span id="toast-message" class="text-sm font-medium">Pesan di sini</span>
-            <button onclick="dismissToast()" class="text-gray-400 hover:text-white font-bold text-lg">&times;</button>
-        </div>
-
-        <!-- Indikator Status Memuat (DIUBAH: Menggunakan aksen warna biru) -->
-        <div id="loading-status-bar" class="bg-blue-50 border border-blue-200 text-blue-800 p-2.5 rounded-xl text-[11px] font-semibold mb-4 flex items-center gap-2">
-            <div class="animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-blue-700"></div>
-            <span>Memperbarui informasi database terbaru secara live dari Google Sheets...</span>
-        </div>
-
-        <!-- AREA UTAMA: PENCARIAN -->
-        <section id="section-warga" class="space-y-4">
+        <!-- Konten Utama Aplikasi -->
+        <main class="max-w-4xl mx-auto px-3 mt-4 space-y-4">
             
-            <!-- Ringkasan Statistik Cepat (DIUBAH: Angka statistik menjadi biru) -->
-            <div class="grid grid-cols-2 gap-3">
-                <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100">
-                    <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wider">Total Data Terklasifikasi</p>
-                    <p id="stat-total-warga" class="text-xl font-bold text-blue-600 mt-0.5">0</p>
+            <!-- Indikator Informasi Status Akun -->
+            <div id="loading-status-bar" class="hidden bg-blue-50 border border-blue-200 text-blue-900 p-3 rounded-xl text-xs font-semibold flex items-center justify-between shadow-sm">
+                <div class="flex items-center gap-2">
+                    <div class="h-2 w-2 rounded-full bg-emerald-500" id="status-dot"></div>
+                    <span id="status-text">Seluruh data master siswa terintegrasi permanen. Sistem siap digunakan.</span>
                 </div>
-                <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-center">
-                    <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wider mb-0.5">Status Sinkronisasi</p>
-                    <div id="sync-badge-status" class="text-[10px] text-blue-700 font-bold bg-blue-50 px-1.5 py-0.5 rounded inline-flex items-center gap-1 w-max">
-                        <span class="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse"></span>
-                        Terhubung
+                <span id="status-badge" class="text-[10px] bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded-full font-mono font-bold">ONLINE</span>
+            </div>
+
+            <!-- ==================== GATEWAY PORTAL LOGIN ==================== -->
+            <section id="portal-login-section" class="max-w-md mx-auto px-4 py-12 block">
+                <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 space-y-5 text-center">
+                    <div class="space-y-1">
+                        <h2 class="text-lg font-black text-slate-900 uppercase tracking-wide">Portal Akses Akademik</h2>
+                        <div id="login-info-hint" class="text-xs text-slate-500 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                            Gunakan Akun Default Bawaan untuk Uji Coba:<br>
+                            Siswa: <span class="font-mono font-bold text-blue-600">B-001</span> | Staf: <span class="font-mono font-bold text-blue-600">admin</span> / <span class="font-mono font-bold text-blue-600">admin123</span>
+                        </div>
+                    </div>
+
+                    <!-- Pilihan Tipe Akun Login -->
+                    <div class="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-xl">
+                        <button onclick="pilihRoleLogin('murid')" id="role-murid-btn" class="py-2 text-xs font-black rounded-lg bg-white text-blue-900 shadow-sm transition-all">Siswa / Wali</button>
+                        <button onclick="pilihRoleLogin('admin')" id="role-admin-btn" class="py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all">Staf Admin</button>
+                    </div>
+
+                    <!-- Form Isian Login Siswa -->
+                    <div id="form-login-murid" class="space-y-3 text-left">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Nomor NISN Siswa</label>
+                            <input type="text" id="input-nisn" placeholder="Contoh: B-001, B-002, C-105" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all uppercase">
+                        </div>
+                    </div>
+
+                    <!-- Form Isian Login Admin -->
+                    <div id="form-login-admin" class="space-y-3 text-left hidden">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">ID Pengguna Admin</label>
+                            <input type="text" id="input-admin-id" placeholder="Default: admin" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-blue-500 transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Kata Sandi / Password</label>
+                            <input type="password" id="input-admin-pass" placeholder="Default: admin123" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-blue-500 transition-all">
+                        </div>
+                    </div>
+
+                    <button onclick="prosesAutentikasiAkses()" class="w-full bg-gradient-to-r from-blue-900 to-indigo-950 text-white font-bold py-2.5 rounded-xl text-xs shadow-md hover:from-blue-950 hover:to-slate-900 transition-all active:scale-98">
+                        Masuk ke Sistem
+                    </button>
+                </div>
+            </section>
+
+            <!-- ==================== AREA UTAMA DASHBOARD ==================== -->
+            <div id="main-dashboard-wrapper" class="hidden space-y-4">
+
+                <!-- ==================== TAB 1: AREA PENCARIAN & DATA SISWA ==================== -->
+                <div id="tab-warga-pencarian" class="block space-y-4">
+                    <!-- Area Seleksi Filter Bertingkat Berurutan Vertikal -->
+                    <div id="panel-filter-induk-admin" class="bg-white p-5 rounded-xl shadow-sm border border-slate-100 space-y-4">
+                        <!-- Dropdown">
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">1. Pilih Tingkatan Kelas Aktif</label>
+                            <button onclick="toggleDropdownKustom('dropdown-tingkatan')" id="btn-tingkatan" class="w-full bg-gray-50 border border-gray-200 hover:border-blue-400 rounded-xl px-3 py-2.5 text-xs font-semibold text-left flex justify-between items-center transition-all shadow-sm">
+                                <span id="label-tingkatan">-- Pilih Tingkatan Kelas --</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                            </button>
+                            <div id="dropdown-tingkatan" class="hidden absolute left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-30 dropdown-menu-kustom custom-scrollbar divide-y divide-slate-100">
+                                <!-- Diisi otomatis oleh JavaScript -->
+                            </div>
+                        </div>
+
+                        <!-- Dropdown Tahap 2: Pilih Kelas & Murid -->
+                        <div class="relative">
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">2. Rombel Kelas & Nama Murid</label>
+                            <button onclick="toggleDropdownKustom('dropdown-murid')" id="btn-murid" disabled class="w-full bg-slate-100 border border-slate-200 text-slate-400 rounded-xl px-3 py-2.5 text-xs font-semibold text-left flex justify-between items-center transition-all cursor-not-allowed">
+                                <span id="label-murid">Silakan tentukan tingkatan kelas di atas lebih dahulu</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                            </button>
+                            <div id="dropdown-murid" class="hidden absolute left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-30 dropdown-menu-kustom custom-scrollbar divide-y divide-slate-100">
+                                <!-- Diisi dinamis berdasarkan tingkatan terpilih -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tampilan Detail Buku Administrasi SPP Murid Terpilih -->
+                    <div id="warga-detail-card" class="hidden bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                        <!-- Header Kartu Informasi Siswa -->
+                        <div class="bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 text-white p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 border-b-4 border-amber-500">
+                            <div>
+                                <div class="flex items-center space-x-2">
+                                    <span id="detail-id-badge" class="bg-amber-600 text-white font-mono font-bold text-xs px-2 py-0.5 rounded shadow-sm">NISN</span>
+                                    <h2 id="detail-nama" class="text-sm font-bold tracking-wide">Nama Murid</h2>
+                                </div>
+                                <p id="detail-blok-sub" class="text-xs text-slate-300 mt-1">Kelas Komparasi & Kompetensi</p>
+                            </div>
+                            <div class="text-left sm:text-right">
+                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Total Tunggakan SPP Aktif</p>
+                                <p id="detail-total-tunggakan" class="text-base font-black text-amber-400">Rp 0</p>
+                            </div>
+                        </div>
+
+                        <!-- Konten Rincian Transaksi Keuangan Siswa -->
+                        <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- Sektor Kiri: Resume & Rekening Sekolah -->
+                            <div class="space-y-3">
+                                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Terbayar (Lunas)</span>
+                                    <span id="detail-total-bayar" class="text-base font-black text-emerald-600 block mt-0.5">Rp 0</span>
+                                </div>
+                                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Jumlah Bulan Terbayar</span>
+                                    <span id="detail-bulan-lunas" class="text-xs font-bold text-slate-700 block mt-1">0 Bulan</span>
+                                </div>
+                                
+                                <!-- PANEL INFORMASI REKENING BANK SEKOLAH -->
+                                <div class="bg-blue-50 border border-blue-100 p-3 rounded-xl space-y-2">
+                                    <span class="block text-[10px] font-bold text-blue-800 uppercase tracking-wider flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                                        Metode Pembayaran Virtual Account
+                                    </span>
+                                    <div class="bg-white p-2.5 rounded-lg border border-blue-100 text-xs space-y-1 shadow-inner">
+                                        <p class="text-blue-900 text-[10px] font-bold uppercase tracking-wider">Bank BCA</p>
+                                        <p class="font-mono font-bold text-slate-900 tracking-wider flex items-center justify-between">
+                                            <span id="norek-display">497-231-1468</span>
+                                            <button onclick="salinNoRekening()" title="Salin Nomor" class="text-blue-600 hover:text-blue-800 active:scale-95 transition-transform text-[10px] bg-blue-50 px-2 py-0.5 rounded border border-blue-200 font-bold">Salin</button>
+                                        </p>
+                                        <p class="text-slate-600 text-[11px] mt-0.5">YBP SMK **Cendikia Bangsa**</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sektor Rencana Transaksi Bulanan Murid -->
+                            <div class="md:col-span-2 space-y-2">
+                                <h3 class="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-900" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                                    Histori Mutasi SPP Bulanan Terstruktur
+                                </h3>
+                                
+                                <div class="border border-slate-100 rounded-xl overflow-hidden shadow-inner bg-slate-50 custom-scrollbar overflow-x-auto">
+                                    <table class="w-full text-left text-xs border-collapse">
+                                        <thead>
+                                            <tr class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+                                                <th class="p-2.5">Bulan & Tahun Buku</th>
+                                                <th class="p-2.5">Kelas / Rombel</th>
+                                                <th class="p-2.5">Tanggal Bayar</th>
+                                                <th class="p-2.5 text-right">Jumlah Nominal</th>
+                                                <th class="p-2.5 text-center">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="detail-table-rows" class="divide-y divide-slate-200 bg-white">
+                                            <!-- Diisi via render javascript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== TAB 2: PENGATURAN MASTER DATA, AKUN ADMIN & LOGO ==================== -->
+                <div id="tab-master-pengaturan" class="hidden space-y-6">
+                    
+                    <!-- AREA FORM: EDIT USERNAME & PASSWORD KREDENSIAL UTAMA ADMIN -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-100 space-y-4">
+                        <div>
+                            <h3 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brandAccent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                                </svg>
+                                Modifikasi Kredensial Login Akun Staf Admin
+                            </h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">Ubah nama ID Pengguna (*Username*) dan Kata Sandi admin utama secara berkala untuk menjaga keamanan kas.</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">ID Pengguna Admin Baru</label>
+                                <input type="text" id="update-admin-username" placeholder="Sandi baru" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kata Sandi / Password Baru</label>
+                                <input type="text" id="update-admin-password" placeholder="Password baru" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-semibold">
+                            </div>
+                            <button onclick="perbaruiAkunKredensialAdmin()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded-lg text-xs transition-all shadow-sm h-[38px] active:scale-95">
+                                Perbarui Log Masuk Staf
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- MANAJEMEN AKUN USER SISWA & FORM MUTASI NAIK KELAS -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-100 space-y-4">
+                        <div>
+                            <h3 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-900" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                                Pendaftaran & Fitur Kenaikan Kelas Siswa SMK
+                            </h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">Tambah siswa baru atau naikkan rombel kelas berjalan untuk merubah tingkatan kelas secara otomatis.</p>
+                        </div>
+
+                        <!-- Form Entri Tambah Siswa Baru -->
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">NISN / ID Unik Tetap</label>
+                                <input type="text" id="add-siswa-id" placeholder="Misal: B-010" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-semibold uppercase">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nama Lengkap Murid</label>
+                                <input type="text" id="add-siswa-nama" placeholder="Nama Murid" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kelas Angkatan Awal</label>
+                                <select id="add-siswa-kelas" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs font-semibold">
+                                    <option value="X RPL 1">X RPL 1 (Tingkat X)</option>
+                                    <option value="X RPL 2">X RPL 2 (Tingkat X)</option>
+                                    <option value="X TKJ 1">X TKJ 1 (Tingkat X)</option>
+                                    <option value="X Multi">X Multi (Tingkat X)</option>
+                                    <option value="XI RPL 1">XI RPL 1 (Tingkat XI)</option>
+                                    <option value="XII TKJ 3">XII TKJ 3 (Tingkat XII)</option>
+                                </select>
+                            </div>
+                            <button onclick="simpanAkunSiswaBaru()" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-lg text-xs transition-colors shadow-sm h-[38px]">
+                                Daftarkan Siswa
+                            </button>
+                        </div>
+
+                        <!-- Tabel Daftar Seluruh User Terdaftar & Fitur Naik Kelas Langsung -->
+                        <div class="border border-slate-100 rounded-xl overflow-hidden bg-white max-h-72 overflow-y-auto custom-scrollbar">
+                            <table class="w-full text-left text-xs border-collapse">
+                                <thead class="bg-slate-100 text-slate-600 font-bold sticky top-0 border-b border-slate-200 z-10">
+                                    <tr>
+                                        <th class="p-2.5">NISN (Tetap)</th>
+                                        <th class="p-2.5">Nama Otoritas</th>
+                                        <th class="p-2.5">Kelas Saat Ini</th>
+                                        <th class="p-2.5 text-center">Mutasi Angkatan / Naik Kelas</th>
+                                        <th class="p-2.5 text-center">Hapus</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-manajemen-akun-rows" class="divide-y divide-slate-200">
+                                    <!-- Diisi via render data oleh JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- PENGATURAN LOGO SEKOLAH KUSTOM (JPEG / PNG) -->
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-100 flex flex-col justify-between space-y-3 max-w-md mx-auto">
+                        <div class="space-y-1.5">
+                            <h3 class="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                Upload Logo Instansi (.png / .jpg)
+                            </h3>
+                            <p class="text-slate-500 text-[11px] leading-relaxed">Unggah file gambar logo SMK Cendikia Bangsa atau logo yayasan Anda untuk merubah visual lambang pada pojok kiri atas secara otomatis.</p>
+                        </div>
+                        <div class="flex items-center space-x-2 pt-1">
+                            <label class="flex items-center justify-center bg-amber-50 hover:bg-amber-100 text-amber-900 text-xs font-bold px-4 py-2.5 rounded-xl border border-amber-200 cursor-pointer transition-colors shadow-sm active:scale-98">
+                                <span>Pilih Gambar Logo</span>
+                                <input type="file" id="logo-file-input" accept="image/png, image/jpeg, image/jpg" class="hidden" onchange="handleLogoImageUpload(event)">
+                            </label>
+                            <span id="logo-name-display" class="text-[11px] text-slate-400 italic truncate max-w-[180px]">Menggunakan logo default</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- PANEL 1: PILIH KLUSTER (DIUBAH: Warna teks petunjuk menjadi biru) -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 relative">
-                <h3 class="text-xs font-black text-gray-700 mb-1.5 flex items-center gap-1 uppercase tracking-wider">
-                    PILIH KATEGORI / KLUSTER
-                </h3>
-                <button onclick="toggleDropdownKustom('menu-kluster-rt')" id="btn-kluster-rt" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-medium text-left flex justify-between items-center shadow-sm transition-all focus:ring-2 focus:ring-blue-500">
-                    <span id="label-kluster-rt">-- Pilih Kluster Huruf Di Sini (Misal: B) --</span>
-                    <svg xmlns="http://w3.org" class="h-3 w-3 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                </button>
-                <div id="menu-kluster-rt" class="hidden absolute left-4 right-4 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl z-30 dropdown-menu-kustom custom-scrollbar divide-y divide-gray-50"></div>
+        </main>
+    </div>
+
+    <!-- ==================== AREA BAWAH: MOTO & SLOGAN SMK ==================== -->
+    <footer class="max-w-4xl w-full mx-auto px-3 mt-8">
+        <div class="bg-gradient-to-br from-slate-900 to-blue-950 text-white p-5 rounded-2xl border border-slate-800 shadow-xl relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 text-slate-800/20 pointer-events-none transform rotate-12">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-32 w-32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
             </div>
 
-            <!-- PANEL 2: PILIH BLOK / UNIT -->
-            <div id="panel-blok-container" class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 relative hidden">
-                <h3 class="text-xs font-black text-gray-700 mb-1.5 flex items-center gap-1 uppercase tracking-wider">
-                    PILIH BLOK & NOMOR UNIT
-                </h3>
-                <button onclick="toggleDropdownKustom('menu-blok-warga')" id="btn-blok-warga" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-medium text-left flex justify-between items-center shadow-sm transition-all focus:ring-2 focus:ring-blue-500">
-                    <span id="label-blok-warga">-- Pilih Nomor Unit --</span>
-                    <svg xmlns="http://w3.org" class="h-3 w-3 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                </button>
-                <div id="menu-blok-warga" class="hidden absolute left-4 right-4 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl z-30 dropdown-menu-kustom custom-scrollbar divide-y divide-gray-50"></div>
-            </div>
-
-            <!-- PANEL 3: DETAIL RIWAYAT DATA -->
-            <div id="panel-hasil-pembayaran" class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hidden">
-                <div class="border-b border-gray-100 pb-3 mb-3">
-                    <h2 id="view-nama-warga" class="text-base font-bold text-gray-900">Nama Lengkap</h2>
-                    <p id="view-id-blok" class="text-xs font-medium text-blue-600 mt-0.5">Detail Unit: -</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center relative z-10 text-center md:text-left divide-y md:divide-y-0 md:divide-x divide-slate-800">
+                <div class="pb-3 md:pb-0 md:pr-4 flex flex-col justify-center items-center md:items-start">
+                    <span class="text-xs font-black text-amber-500 tracking-widest uppercase">MOTO UTAMA</span>
+                    <h3 class="text-xl font-black italic tracking-wide text-white mt-0.5">SMK BISA!</h3>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Menghasilkan lulusan kompeten & siap kerja.</p>
                 </div>
-                
-                <div class="overflow-x-auto custom-scrollbar">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead>
-                            <tr class="bg-gray-100 text-gray-700 font-bold">
-                                <th class="p-2.5 rounded-l-lg">Periode / Keterangan</th>
-                                <th class="p-2.5">Tanggal Sinkron</th>
-                                <th class="p-2.5">Jumlah</th>
-                                <th class="p-2.5 rounded-r-lg text-center">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body-tagihan" class="divide-y divide-gray-100 text-gray-600">
-                            <!-- Diisi via JS -->
-                        </tbody>
-                    </table>
+                <div class="py-3 md:py-0 md:px-6 flex flex-col justify-center items-center md:items-start">
+                    <span class="text-xs font-black text-blue-400 tracking-widest uppercase">TAGLINE NASIONAL</span>
+                    <h3 class="text-xl font-black italic tracking-wide text-white mt-0.5">SMK HEBAT!</h3>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Unggul dalam prestasi, inovatif dalam kreasi.</p>
+                </div>
+                <div class="pt-3 md:pt-0 md:pl-6 flex flex-col justify-center items-center md:items-start">
+                    <span class="text-xs font-black text-indigo-400 tracking-widest uppercase">VISI LEMBAGA</span>
+                    <h3 class="text-sm font-bold text-amber-400 mt-0.5">CENDIKIA BANGSA</h3>
+                    <p class="text-[11px] text-slate-300 italic font-medium mt-1">"Cerdas Berpikir, Ahli Berkarya, Berkarakter Mulia."</p>
                 </div>
             </div>
-        </section>
-    </main>
-
-    <!-- LOGIKA JAVASCRIPT APLIKASI UTAMA -->
-    <script>
-        let databaseWarga = {};
-        let klusterTerpilih = "";
-
-        document.addEventListener("DOMContentLoaded", () => {
-            muatDataDariSheets();
             
+            <div class="mt-5 pt-3 border-t border-slate-800/60 text-center text-[10px] text-slate-500 font-medium tracking-wide">
+                &copy; 2026 E-SPP SMK Cendikia Bangsa. All Rights Reserved &bull; Dikembangkan untuk Kelancaran Administrasi Sekolah
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERAKSI SCRIPTS ENGINE JAVASCRIPT APLIKASI -->
+    <script>
+        // DATA MASTER UTAMA YANG TER-EMBED PADA APLIKASI
+        const RAW_CSV_DATA = `No.,Nama Pelanggan,Tgl Faktur,Tgl terima,Pembayaran
+B-001,Blok B1-1 | Ibu Musyarofah,01 Jan 2026,09 Jan 2026,"50.000,00"
+B-001,Blok B1-1 | Ibu Musyarofah,01 Feb 2026,06 Mar 2026,"50.000,00"
+B-001,Blok B1-1 | Ibu Musyarofah,01 Mar 2026,06 Mar 2026,"50.000,00"
+B-001,Blok B1-1 | Ibu Musyarofah,01 Apr 2026,20 Apr 2026,"50.000,00"
+B-001,Blok B1-1 | Ibu Musyarofah,01 Mei 2026,20 Apr 2026,"50.000,00"
+B-001,Blok B1-1 | Ibu Musyarofah,01 Jun 2026,09 Okt 2026,"50.000,00"
+B-001,Blok B1-1 | Ibu Musyarofah,01 Jul 2026,09 Okt 2026,"50.000,00"
+B-001,Blok B1-1 | Ibu Musyarofah,01 Rid 2026,09 Okt 2026,"50.000,00"
+B-001,Blok B1-1 | Ibu Musyarofah,01 Sep 2026,09 Okt 2026,"50.000,00"
+B-001,Blok B1-1 | Ibu Musyarofah,01 Okt 2026,09 Okt 2026,"50.000,00"
+B-001,Blok B1-1 | Ibu Musyarofah,01 Nov 2026,,"0,00"
+B-001,Blok B1-1 | Ibu Musyarofah,01 Des 2026,,"0,00"
+B-002,Blok B1-2 | Ibu Syafrina,01 Jan 2026,14 Jan 2026,"50.000,00"
+B-002,Blok B1-2 | Ibu Syafrina,01 Feb 2026,14 Jan 2026,"50.000,00"
+B-002,Blok B1-2 | Ibu Syafrina,01 Mar 2026,27 Mar 2026,"50.000,00"
+B-002,Blok B1-2 | Ibu Syafrina,01 Apr 2026,27 Mar 2026,"50.000,00"
+B-002,Blok B1-2 | Ibu Syafrina,01 Mei 2026,10 Jun 2026,"50.000,00"
+B-002,Blok B1-2 | Ibu Syafrina,01 Jun 2026,10 Jun 2026,"50.000,00"
+B-002,Blok B1-2 | Ibu Syafrina,01 Jul 2026,05 Sep 2026,"50.000,00"
+B-002,Blok B1-2 | Ibu Syafrina,01 Rid 2026,05 Sep 2026,"50.000,00"
+B-002,Blok B1-2 | Ibu Syafrina,01 Sep 2026,15 Okt 2026,"50.000,00"
+B-002,Blok B1-2 | Ibu Syafrina,01 Okt 2026,15 Okt 2026,"50.000,00"
+B-002,Blok B1-2 | Ibu Syafrina,01 Nov 2026,,"0,00"
+B-002,Blok B1-2 | Ibu Syafrina,01 Des 2026,,"0,00"
+B-003,Blok B1-3 | Bpk. Rangga Kusuma,01 Jan 2026,31 Des 2025,"50.000,00"
+B-003,Blok B1-3 | Bpk. Rangga Kusuma,01 Feb 2026,31 Des 2025,"50.000,00"
+B-003,Blok B1-3 | Bpk. Rangga Kusuma,01 Mar 2026,31 Des 2025,"50.000,00"
+B-003,Blok B1-3 | Bpk. Rangga Kusuma,01 Apr 2026,31 Des 2025,"50.000,00"
+B-003,Blok B1-3 | Bpk. Rangga Kusuma,01 Mei 2026,31 Des 2025,"50.000,00"
+B-003,Blok B1-3 | Bpk. Rangga Kusuma,01 Jun 2026,31 Des 2025,"50.000,00"
+B-003,Blok B1-3 | Bpk. Rangga Kusuma,01 Jul 2026,26 Jun 2026,"50.000,00"
+B-003,Blok B1-3 | Bpk. Rangga Kusuma,01 Rid 2026,26 Jun 2026,"50.000,00"
+B-003,Blok B1-3 | Bpk. Rangga Kusuma,01 Sep 2026,26 Jun 2026,"50.000,00"
+B-003,Blok B1-3 | Bpk. Rangga Kusuma,01 Okt 2026,26 Jun 2026,"50.000,00"
+B-003,Blok B1-3 | Bpk. Rangga Kusuma,01 Nov 2026,26 Jun 2026,"50.000,00"
+B-003,Blok B1-3 | Bpk. Rangga Kusuma,01 Des 2026,26 Jun 2026,"50.000,00"
+B-009,Blok B1-10 | Bpk. Desmanto,01 Jan 2026,06 Jan 2026,"50.000,00"
+B-009,Blok B1-10 | Bpk. Desmanto,01 Feb 2026,08 Feb 2026,"50.000,00"
+B-009,Blok B1-10 | Bpk. Desmanto,01 Mar 2026,08 Feb 2026,"50.000,00"
+B-009,Blok B1-10 | Bpk. Desmanto,01 Apr 2026,03 Apr 2026,"50.000,00"
+B-009,Blok B1-10 | Bpk. Desmanto,01 Mei 2026,03 Apr 2026,"50.000,00"
+B-009,Blok B1-10 | Bpk. Desmanto,01 Jun 2026,09 Jun 2026,"50.000,00"
+B-009,Blok B1-10 | Bpk. Desmanto,01 Jul 2026,09 Jun 2026,"50.000,00"
+B-009,Blok B1-10 | Bpk. Desmanto,01 Rid 2026,13 Agu 2026,"50.000,00"
+B-009,Blok B1-10 | Bpk. Desmanto,01 Sep 2026,13 Agu 2026,"50.000,00"
+B-009,Blok B1-10 | Bpk. Desmanto,01 Okt 2026,06 Nov 2026,"50.000,00"
+B-009,Blok B1-10 | Bpk. Desmanto,01 Nov 2026,06 Nov 2026,"50.000,00"
+B-009,Blok B1-10 | Bpk. Desmanto,01 Des 2026,06 Nov 2026,"50.000,00"
+C-105,Blok C2-17 | Bpk. Stevenus Cahyadi H,01 Mei 2026,05 Mei 2026,"50.000,00"
+C-105,Blok C2-17 | Bpk. Stevenus Cahyadi H,01 Jun 2026,10 Nov 2026,"50.000,00"
+C-105,Blok C2-17 | Bpk. Stevenus Cahyadi H,01 Jul 2026,10 Nov 2026,"50.000,00"
+C-105,Blok C2-17 | Bpk. Stevenus Cahyadi H,01 Rid 2026,10 Nov 2026,"50.000,00"
+C-105,Blok C2-17 | Bpk. Stevenus Cahyadi H,01 Sep 2026,10 Nov 2026,"50.000,00"
+C-105,Blok C2-17 | Bpk. Stevenus Cahyadi H,01 Okt 2026,10 Nov 2026,"50.000,00"
+C-105,Blok C2-17 | Bpk. Stevenus Cahyadi H,01 Nov 2026,10 Nov 2026,"50.000,00"
+C-105,Blok C2-17 | Bpk. Stevenus Cahyadi H,01 Des 2026,10 Nov 2026,"50.000,00"
+R-0140,Blok D6-20 |,01 Jan 2026,05 Jan 2026,"50.000,00"
+R-0140,Blok D6-20 |,01 Feb 2026,24 Feb 2026,"50.000,00"
+R-0140,Blok D6-20 |,01 Mar 2026,15 Mar 2026,"50.000,00"
+R-0140,Blok D6-20 |,01 Apr 2026,5 Apr 2026,"50.000,00"
+R-0140,Blok D6-20 |,01 Mei 2026,23 Mei 2026,"50.000,00"
+R-0140,Blok D6-20 |,01 Jun 2026,08 Jun 2026,"50.000,00"`;
+
+        let databaseTransaksiSekolah = [];
+        let indexMuridMap = {};
+        let daftarTingkatanSiswa = [];
+        let roleAktifSekarang = "murid"; 
+
+        // KREDENSIAL DEFAULT ADMIN UTAMA
+        let KREDENSIAL_ADMIN = {
+            username: "admin",
+            password: "admin123"
+        };
+
+        const MAPPING_TINGKATAN = { 'B': 'Kelas X', 'C': 'Kelas XI', 'R': 'Kelas XII' };
+        const MAPPING_KOMPETENSI = { 
+            'B-001': 'X RPL 1', 'B-002': 'X RPL 2', 'B-003': 'X TKJ 1', 'B-009': 'X Multi',
+            'C-105': 'XI RPL 1', 
+            'R-0140': 'XII TKJ 3' 
+        };
+
+        // Fungsi Penukar Peran Otoritas pada Gateway Portal Login
+        function pilihRoleLogin(role) {
+            roleAktifSekarang = role;
+            const btnMurid = document.getElementById('role-murid-btn');
+            const btnAdmin = document.getElementById('role-admin-btn');
+            const formMurid = document.getElementById('form-login-murid');
+            const formAdmin = document.getElementById('form-login-admin');
+
+            if (role === 'murid') {
+                btnMurid.className = "py-2 text-xs font-black rounded-lg bg-white text-blue-900 shadow-sm transition-all";
+                btnAdmin.className = "py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all";
+                formMurid.classList.remove('hidden');
+                formAdmin.classList.add('hidden');
+            } else {
+                btnAdmin.className = "py-2 text-xs font-black rounded-lg bg-white text-blue-900 shadow-sm transition-all";
+                btnMurid.className = "py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all";
+                formAdmin.classList.remove('hidden');
+                formMurid.classList.add('hidden');
+            }
+        }
+
+        // Fungsi Validasi Otoritas Sistem Login Multi-User
+        function prosesAutentikasiAkses() {
+            if (roleAktifSekarang === 'murid') {
+                const nisnInput = document.getElementById('input-nisn').value.trim().toUpperCase();
+                if (!nisnInput) {
+                    alert("Harap masukkan Nomor NISN Anda!");
+                    return;
+                }
+                if (!indexMuridMap[nisnInput]) {
+                    alert("Nomor NISN tidak ditemukan! Coba gunakan: B-001, B-002, C-105, atau R-0140");
+                    return;
+                }
+
+                document.getElementById('portal-login-section').classList.add('hidden');
+                document.getElementById('main-dashboard-wrapper').classList.remove('hidden');
+                document.getElementById('btn-logout').classList.remove('hidden');
+                document.getElementById('loading-status-bar').classList.remove('hidden');
+                
+                // Kustomisasi Siswa: Sembunyikan tabs & filter pencarian admin
+                document.getElementById('navigation-tabs-bar').classList.add('hidden');
+                document.getElementById('panel-filter-induk-admin').classList.add('hidden');
+                
+                document.getElementById('status-text').innerText = `Masuk sebagai Siswa: ${indexMuridMap[nisnInput].nama}.`;
+
+                tampilkanDataDetailMurid(nisnInput);
+
+            } else {
+                const adminId = document.getElementById('input-admin-id').value.trim();
+                const adminPass = document.getElementById('input-admin-pass').value.trim();
+                
+                if (adminId !== KREDENSIAL_ADMIN.username || adminPass !== KREDENSIAL_ADMIN.password) {
+                    alert("ID Pengguna atau Kata Sandi Admin salah!");
+                    return;
+                }
+
+                document.getElementById('portal-login-section').classList.add('hidden');
+                document.getElementById('main-dashboard-wrapper').classList.remove('hidden');
+                document.getElementById('btn-logout').classList.remove('hidden');
+                document.getElementById('loading-status-bar').classList.remove('hidden');
+                
+                // Kustomisasi Admin: Aktifkan penuh seluruh modul
+                document.getElementById('navigation-tabs-bar').classList.remove('hidden');
+                document.getElementById('panel-filter-induk-admin').classList.remove('hidden');
+                document.getElementById('warga-detail-card').classList.add('hidden'); 
+
+                gantiTabAplikasi('tab-warga-pencarian');
+                document.getElementById('status-text').innerText = `Masuk sebagai Staf Admin Bendahara (${adminId}). Hak Akses Manajemen Penuh.`;
+                
+                document.getElementById('update-admin-username').value = KREDENSIAL_ADMIN.username;
+                document.getElementById('update-admin-password').value = KREDENSIAL_ADMIN.password;
+
+                renderTabelManajemenAkun();
+            }
+        }
+
+        // Fungsi Memperbarui Akun Kredensial Admin Utama secara Live
+        function perbaruiAkunKredensialAdmin() {
+            const userBaru = document.getElementById('update-admin-username').value.trim();
+            const passBaru = document.getElementById('update-admin-password').value.trim();
+
+            if (!userBaru || !passBaru) {
+                alert("ID Pengguna dan Password Admin tidak boleh kosong!");
+                return;
+            }
+
+            KREDENSIAL_ADMIN.username = userBaru;
+            KREDENSIAL_ADMIN.password = passBaru;
+
+            document.getElementById('login-info-hint').innerHTML = `
+                Gunakan Akun Default Bawaan untuk Uji Coba:<br>
+                Siswa: <span class="font-mono font-bold text-blue-600">B-001</span> | Staf: <span class="font-mono font-bold text-blue-600">${userBaru}</span> / <span class="font-mono font-bold text-blue-600">${passBaru}</span>
+            `;
+
+            renderTabelManajemenAkun();
+            pemicuNotifikasiToast("Kredensial login Admin berhasil diperbarui!");
+        }
+
+        // SOLUSI MUTASI KENAIKAN KELAS: Fungsi Mengubah Label Kelas Siswa Secara Dinamis Tanpa Ganti Akun
+        function eksekusiNaikKelasSiswa(idSiswa, kelasTujuan) {
+            if (!indexMuridMap[idSiswa]) return;
+            
+            const namaSiswa = indexMuridMap[idSiswa].nama;
+            let kodeHuruf = kelasTujuan.charAt(0);
+            let tingkatanBaru = 'Kelas X';
+            if (kodeHuruf === 'X' && kelasTujuan.charAt(1) === 'I') {
+                tingkatanBaru = kelasTujuan.charAt(2) === 'I' ? 'Kelas XII' : 'Kelas XI';
+            }
+
+            // Update data kelas dan tingkatan aktif murid di memori
+            indexMuridMap[idSiswa].kelas = kelasTujuan;
+            indexMuridMap[idSiswa].tingkatan = tingkatanBaru;
+
+            // Tambahkan baris penanda di riwayat transaksi untuk membuktikan kelasnya sudah berubah
+            indexMuridMap[idSiswa].listHistori.unshift({
+                faktur: `Mutasi Kenaikan Ke ${kelasTujuan}`,
+                terima: new Date().toLocaleDateString('id-ID'),
+                bayar: 0
+            });
+
+            // Rekalkulasi arsitektur menu agar dropdown pencarian ikut ter-update
+            let setTingkatan = new Set();
+            Object.values(indexMuridMap).forEach(w => setTingkatan.add(w.tingkatan));
+            daftarTingkatanSiswa = Array.from(setTingkatan).sort();
+
+            renderDropdownKustomTingkatan();
+            renderTabelManajemenAkun();
+            
+            // Jika kartu detail sedang terbuka, refresh tampilannya
+            if (!document.getElementById('warga-detail-card').classList.contains('hidden')) {
+                tampilkanDataDetailMurid(idSiswa);
+            }
+
+            pemicuNotifikasiToast(`Siswa ${namaSiswa} Berhasil Dimutasi ke ${kelasTujuan}!`);
+        }
+
+        // Fungsi Pembuat Akun Siswa Baru Secara Dinamis Oleh Admin
+        function simpanAkunSiswaBaru() {
+            const newId = document.getElementById('add-siswa-id').value.trim().toUpperCase();
+            const newNama = document.getElementById('add-siswa-nama').value.trim();
+            const newKelas = document.getElementById('add-siswa-kelas').value;
+
+            if (!newId || !newNama) {
+                alert("Harap lengkapi nomor NISN dan Nama Siswa baru!");
+                return;
+            }
+
+            if (indexMuridMap[newId]) {
+                alert("Nomor NISN tersebut sudah terdaftar di sistem!");
+                return;
+            }
+
+            let labelTingkatan = 'Kelas X';
+            if (newKelas.startsWith("XI ")) labelTingkatan = 'Kelas XI';
+            if (newKelas.startsWith("XII ")) labelTingkatan = 'Kelas XII';
+
+            indexMuridMap[newId] = {
+                id: newId,
+                tingkatan: labelTingkatan,
+                kelas: newKelas,
+                nama: newNama,
+                totalBayar: 0,
+                totalTunggakan: 50000 * 12, 
+                blurLunasCount: 0,
+                listHistori: [
+                    { faktur: "01 Jan 2026", terima: "-", bayar: 0 },
+                    { faktur: "01 Feb 2026", terima: "-", bayar: 0 },
+                    { faktur: "01 Mar 2026", terima: "-", bayar: 0 },
+                    { faktur: "01 Apr 2026", terima: "-", bayar: 0 },
+                    { faktur: "01 Mei 2026", terima: "-", bayar: 0 },
+                    { faktur: "01 Jun 2026", terima: "-", bayar: 0 },
+                    { faktur: "01 Jul 2026", terima: "-", bayar: 0 },
+                    { faktur: "01 Rid 2026", terima: "-", bayar: 0 },
+                    { faktur: "01 Sep 2026", terima: "-", bayar: 0 },
+                    { faktur: "01 Okt 2026", terima: "-", bayar: 0 },
+                    { faktur: "01 Nov 2026", terima: "-", bayar: 0 },
+                    { faktur: "01 Des 2026", terima: "-", bayar: 0 }
+                ]
+            };
+
+            let setTingkatan = new Set(daftarTingkatanSiswa);
+            setTingkatan.add(labelTingkatan);
+            daftarTingkatanSiswa = Array.from(setTingkatan).sort();
+            
+            renderDropdownKustomTingkatan();
+            renderTabelManajemenAkun();
+
+            document.getElementById('add-siswa-id').value = '';
+            document.getElementById('add-siswa-nama').value = '';
+            
+            pemicuNotifikasiToast(`Akun Murid ${newNama} berhasil dibuat!`);
+        }
+
+        // Fungsi Menghapus Akun Murid oleh Admin
+        function hapusAkunSiswa(idSiswa) {
+            if (confirm(`Apakah Anda yakin ingin menghapus akun siswa dengan NISN ${idSiswa}?`)) {
+                delete indexMuridMap[idSiswa];
+                let setTingkatan = new Set();
+                Object.values(indexMuridMap).forEach(w => setTingkatan.add(w.tingkatan));
+                daftarTingkatanSiswa = Array.from(setTingkatan).sort();
+                
+                renderDropdownKustomTingkatan();
+                renderTabelManajemenAkun();
+                pemicuNotifikasiToast("Akun siswa telah dihapus dari sistem.");
+            }
+        }
+
+        // Fungsi Merender Daftar Akun ke Tabel Manajemen Pengaturan (Dilengkapi Opsi Ubah Kelas)
+        function renderTabelManajemenAkun() {
+            const tbody = document.getElementById('table-manajemen-akun-rows');
+            tbody.innerHTML = '';
+
+            // Tampilkan Akun Utama Admin Berdasarkan Kredensial Aktif
+            let rowAdmin = document.createElement('tr');
+            rowAdmin.className = "bg-amber-50/60 font-semibold";
+            rowAdmin.innerHTML = `
+                <td class="p-2.5 font-mono text-blue-900">${KREDENSIAL_ADMIN.username}</td>
+                <td class="p-2.5">Staf Utama (Sandi: ${KREDENSIAL_ADMIN.password})</td>
+                <td class="p-2.5" colspan="2"><span class="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded-full font-bold">FULL ACCESS ADMIN</span></td>
+                <td class="p-2.5 text-center text-slate-400 italic text-[11px]">-</td>
+            `;
+            tbody.appendChild(rowAdmin);
+
+            // Iterasi & Render Semua Akun Siswa dalam Memori
+            Object.values(indexMuridMap).forEach(murid => {
+                let row = document.createElement('tr');
+                row.className = "hover:bg-slate-50 border-b border-slate-100 transition-colors";
+                row.innerHTML = `
+                    <td class="p-2.5 font-mono font-bold">${murid.id}</td>
+                    <td class="p-2.5 font-medium text-slate-900">${murid.nama}</td>
+                    <td class="p-2.5 font-bold text-blue-900">${murid.kelas}</td>
+                    <td class="p-2.5 text-center">
+                        <!-- Pilihan Akses Cepat untuk Menaikkan Kelas Murid -->
+                        <select onchange="eksekusiNaikKelasSiswa('${murid.id}', this.value)" class="bg-slate-50 border border-slate-300 rounded px-1.5 py-1 text-[11px] font-semibold text-slate-700 focus:ring-1 focus:ring-blue-500">
+                            <option value="" disabled selected>-- Pilih Kelas Tujuan --</option>
+                            <option value="X RPL 1" ${murid.kelas==='X RPL 1'?'disabled':''}>X RPL 1</option>
+                            <option value="X RPL 2" ${murid.kelas==='X RPL 2'?'disabled':''}>X RPL 2</option>
+                            <option value="X TKJ 1" ${murid.kelas==='X TKJ 1'?'disabled':''}>X TKJ 1</option>
+                            <option value="X Multi" ${murid.kelas==='X Multi'?'disabled':''}>X Multi</option>
+                            <option value="XI RPL 1" ${murid.kelas==='XI RPL 1'?'disabled':''}>XI RPL 1</option>
+                            <option value="XII TKJ 3" ${murid.kelas==='XII TKJ 3'?'disabled':''}>XII TKJ 3</option>
+                        </select>
+                    </td>
+                    <td class="p-2.5 text-center">
+                        <button onclick="hapusAkunSiswa('${murid.id}')" class="text-red-600 hover:text-red-900 font-bold text-[11px] bg-red-50 hover:bg-red-100 px-2 py-0.5 rounded border border-red-200">Hapus</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Fungsi Menghancurkan Sesi Login (Logout) Kembali ke Halaman Utama Portal
+        function logoutSistemAplikasi() {
+            document.getElementById('input-nisn').value = '';
+            document.getElementById('input-admin-id').value = '';
+            document.getElementById('input-admin-pass').value = '';
+            
+            document.getElementById('main-dashboard-wrapper').classList.add('hidden');
+            document.getElementById('btn-logout').classList.add('hidden');
+            document.getElementById('loading-status-bar').classList.add('hidden');
+            document.getElementById('portal-login-section').classList.remove('hidden');
+            pemicuNotifikasiToast("Anda telah keluar dari aplikasi.");
+        }
+
+        function gantiTabAplikasi(idTabTarget) {
+            const tabPencarian = document.getElementById('tab-warga-pencarian');
+            const tabMaster = document.getElementById('tab-master-pengaturan');
+            const btnWarga = document.getElementById('btn-tab-warga');
+            const btnMaster = document.getElementById('btn-tab-master');
+
+            if (idTabTarget === 'tab-warga-pencarian') {
+                tabPencarian.classList.remove('hidden');
+                tabMaster.classList.add('hidden');
+                btnWarga.className = "py-3 px-4 text-xs font-black uppercase tracking-wider border-b-2 border-blue-800 text-blue-900 flex items-center gap-1.5 transition-all";
+                btnMaster.className = "py-3 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition-all";
+            } else {
+                tabMaster.classList.remove('hidden');
+                tabPencarian.classList.add('hidden');
+                btnMaster.className = "py-3 px-4 text-xs font-black uppercase tracking-wider border-b-2 border-blue-800 text-blue-900 flex items-center gap-1.5 transition-all";
+                btnWarga.className = "py-3 px-4 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition-all";
+                renderTabelManajemenAkun();
+            }
+        }
+
+        function handleLogoImageUpload(event) {
+            const fileGambar = event.target.files[0];
+            if (!fileGambar) return;
+
+            document.getElementById('logo-name-display').innerText = fileGambar.name;
+
+            const pembacaGambar = new FileReader();
+            pembacaGambar.onload = function(e) {
+                const dataUrlGambar = e.target.result;
+                const wadahLogo = document.getElementById('logo-container');
+                
+                wadahLogo.innerHTML = `<img src="${dataUrlGambar}" alt="Logo SMK" class="h-full w-full object-contain" />`;
+                pemicuNotifikasiToast("Logo instansi berhasil diperbarui!");
+            };
+            pembacaGambar.readAsDataURL(fileGambar);
+        }
+
+        function inisialisasiDatabaseTertanam() {
+            try {
+                const barisData = RAW_CSV_DATA.split(/\r?\n/);
+                const penampungDataMentah = [];
+
+                for (let i = 1; i < barisData.length; i++) {
+                    let baris = barisData[i].trim();
+                    if (!baris) continue;
+
+                    let hasilToken = [];
+                    let dalamKuotasi = false;
+                    let tokenBerjalan = '';
+
+                    for (let j = 0; j < baris.length; j++) {
+                        let karakter = baris[j];
+                        if (karakter === '"') {
+                            dalamKuotasi = !dalamKuotasi;
+                        } else if (karakter === ',' && !dalamKuotasi) {
+                            hasilToken.push(tokenBerjalan.trim());
+                            tokenBerjalan = '';
+                        } else {
+                            tokenBerjalan += karakter;
+                        }
+                    }
+                    hasilToken.push(tokenBerjalan.trim());
+
+                    if (hasilToken.length >= 5) {
+                        let nomorId = hasilToken[0];
+                        let namaRaw = hasilToken[1];
+                        let tglFaktur = hasilToken[2];
+                        let tglTerima = hasilToken[3] || '-';
+                        let nilaiBayarStr = hasilToken[4];
+
+                        let pembersihanAngka = nilaiBayarStr.replace(/\./g, '').replace(/,/g, '.');
+                        let nominalAngka = parseFloat(pembersihanAngka) || 0;
+
+                        let komponenNama = namaRaw.split('|');
+                        let stringNamaSiswa = komponenNama[1] ? komponenNama[1].trim() : 'Siswa';
+                        
+                        let kodeHuruf = nomorId.charAt(0).toUpperCase();
+                        let labelTingkatan = MAPPING_TINGKATAN[kodeHuruf] || 'Umum';
+                        let labelKelas = MAPPING_KOMPETENSI[nomorId] || `${kodeHuruf} (Kompetensi Khusus)`;
+
+                        penampungDataMentah.push({
+                            id: nomorId,
+                            tingkatan: labelTingkatan,
+                            kelas: labelKelas,
+                            nama: stringNamaSiswa,
+                            faktur: tglFaktur,
+                            terima: tglTerima,
+                            bayar: nominalAngka
+                        });
+                    }
+                }
+
+                databaseTransaksiSekolah = penampungDataMentah;
+                membangunArsitekturStrukturData();
+
+            } catch (kesalahan) {
+                console.error("Gagal melakukan kalkulasi data: ", kesalahan);
+            }
+        }
+
+        function membangunArsitekturStrukturData() {
+            indexMuridMap = {};
+            let setTingkatan = new Set();
+
+            databaseTransaksiSekolah.forEach(item => {
+                if (!indexMuridMap[item.id]) {
+                    setTingkatan.add(item.tingkatan);
+
+                    indexMuridMap[item.id] = {
+                        id: item.id,
+                        tingkatan: item.tingkatan,
+                        kelas: item.kelas,
+                        nama: item.nama,
+                        totalBayar: 0,
+                        totalTunggakan: 0,
+                        bulanLunasCount: 0,
+                        listHistori: []
+                    };
+                }
+
+                indexMuridMap[item.id].listHistori.push({
+                    faktur: item.faktur,
+                    kelasSaatItu: item.kelas,
+                    terima: item.terima,
+                    bayar: item.bayar
+                });
+
+                if (item.bayar > 0) {
+                    indexMuridMap[item.id].totalBayar += item.bayar;
+                    indexMuridMap[item.id].bulanLunasCount++;
+                } else {
+                    let nilaiKewajibanBulanan = item.id.includes("B-009") ? 25000 : 50000;
+                    indexMuridMap[item.id].totalTunggakan += nilaiKewajibanBulanan;
+                }
+            });
+
+            daftarTingkatanSiswa = Array.from(setTingkatan).sort();
+            renderDropdownKustomTingkatan();
+        }
+
+        function renderDropdownKustomTingkatan() {
+            const wadahMenu = document.getElementById('dropdown-tingkatan');
+            wadahMenu.innerHTML = '';
+
+            daftarTingkatanSiswa.forEach(tingkat => {
+                let jumlahMurid = Object.values(indexMuridMap).filter(w => w.tingkatan === tingkat).length;
+
+                let elemenTombol = document.createElement('button');
+                elemenTombol.className = "w-full text-left px-4 py-2.5 text-xs hover:bg-blue-50 text-slate-700 font-semibold transition-colors flex justify-between items-center";
+                elemenTombol.innerHTML = `
+                    <span class="font-bold text-slate-900">${tingkat}</span>
+                    <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">${jumlahMurid} Siswa Terdaftar</span>
+                `;
+                elemenTombol.onclick = () => pilihTingkatanSistemCascading(tingkat);
+                wadahMenu.appendChild(elemenTombol);
+            });
+        }
+
+        function pilihTingkatanSistemCascading(tingkat) {
+            document.getElementById('label-tingkatan').innerText = tingkat;
+            tutupSemuaDropdownKustom();
+
+            let muridFilter = Object.values(indexMuridMap).filter(w => w.tingkatan === tingkat).sort((x, y) => x.id.localeCompare(y.id));
+
+            const btnMurid = document.getElementById('btn-murid');
+            const labelMurid = document.getElementById('label-murid');
+            const wadahMuridMenu = document.getElementById('dropdown-murid');
+
+            btnMurid.disabled = false;
+            btnMurid.className = "w-full bg-gray-50 border border-gray-200 hover:border-blue-400 rounded-xl px-3 py-2.5 text-xs font-semibold text-left flex justify-between items-center transition-all shadow-sm";
+            labelMurid.innerText = `-- Pilih Kelas & Nama Murid ${tingkat} --`;
+            wadahMuridMenu.innerHTML = '';
+
+            muridFilter.forEach(murid => {
+                let elemenOpsi = document.createElement('button');
+                elemenOpsi.className = "w-full text-left px-4 py-2.5 text-xs hover:bg-blue-50 text-slate-700 font-medium transition-colors flex justify-between items-center";
+                
+                let warnaStatusTunggakan = murid.totalTunggakan > 0 ? 'text-amber-600 font-bold' : 'text-emerald-600 font-bold';
+
+                elemenOpsi.innerHTML = `
+                    <div>
+                        <span class="font-mono text-blue-600 font-bold mr-1.5">[${murid.kelas}]</span>
+                        <span class="text-slate-800">${murid.nama}</span>
+                    </div>
+                    <span class="text-[10px] ${warnaStatusTunggakan}">
+                        ${murid.totalTunggakan > 0 ? 'Ada Tunggakan' : 'Lunas'}
+                    </span>
+                `;
+                elemenOpsi.onclick = () => tampilkanDataDetailMurid(murid.id);
+                wadahMuridMenu.appendChild(elemenOpsi);
+            });
+        }
+
+        function tampilkanDataDetailMurid(idSiswa) {
+            tutupSemuaDropdownKustom();
+            const dataSiswa = indexMuridMap[idSiswa];
+            if (!dataSiswa) return;
+
+            if(roleAktifSekarang === 'admin') {
+                document.getElementById('label-murid').innerText = `${dataSiswa.kelas} - ${dataSiswa.nama}`;
+            }
+
+            document.getElementById('detail-id-badge').innerText = `NISN: ${dataSiswa.id}`;
+            document.getElementById('detail-nama').innerText = dataSiswa.nama;
+            document.getElementById('detail-blok-sub').innerText = `${dataSiswa.tingkatan} &bull; Rombel Aktif: ${dataSiswa.kelas}`;
+            
+            document.getElementById('detail-total-tunggakan').innerText = formatKeRupiahIDR(dataSiswa.totalTunggakan);
+            document.getElementById('detail-total-bayar').innerText = formatKeRupiahIDR(dataSiswa.totalBayar);
+            document.getElementById('detail-bulan-lunas').innerText = `${dataSiswa.bulanLunasCount} Bulan`;
+
+            const komponenTunggakanText = document.getElementById('detail-total-tunggakan');
+            if (dataSiswa.totalTunggakan > 0) {
+                komponenTunggakanText.className = "text-base font-black text-amber-400";
+            } else {
+                komponenTunggakanText.className = "text-base font-black text-emerald-400";
+            }
+
+            const tabelBody = document.getElementById('detail-table-rows');
+            tabelBody.innerHTML = '';
+
+            dataSiswa.listHistori.forEach(histori => {
+                let namaBulanBuku = konversiBulanFaktur(histori.faktur);
+                let badgeStatusHtml = '';
+
+                if (histori.bayar > 0 || histori.faktur.includes("Mutasi")) {
+                    badgeStatusHtml = histori.faktur.includes("Mutasi") ? 
+                        `<span class="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded-full font-bold">Sistem</span>` :
+                        `<span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-bold">Lunas</span>`;
+                } else {
+                    badgeStatusHtml = `<span class="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded-full font-bold">Belum Bayar</span>`;
+                }
+
+                let barisTr = document.createElement('tr');
+                barisTr.className = "hover:bg-slate-50 border-b border-slate-100 transition-colors";
+                barisTr.innerHTML = `
+                    <td class="p-2.5 font-medium text-slate-900">${namaBulanBuku}</td>
+                    <td class="p-2.5 font-bold text-slate-700">${histori.kelasSaatItu || dataSiswa.kelas}</td>
+                    <td class="p-2.5 font-mono text-slate-500">${histori.terima === '-' || !histori.terima ? '<span class="text-slate-300">-</span>' : histori.terima}</td>
+                    <td class="p-2.5 text-right font-mono font-bold text-slate-800">${formatKeRupiahIDR(histori.bayar)}</td>
+                    <td class="p-2.5 text-center">${badgeStatusHtml}</td>
+                `;
+                tabelBody.appendChild(barisTr);
+            });
+
+            const cardDetail = document.getElementById('warga-detail-card');
+            cardDetail.classList.remove('hidden');
+            cardDetail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function salinNoRekening() {
+            const noRekText = document.getElementById('norek-display').innerText;
+            const dummyInput = document.createElement('input');
+            document.body.appendChild(dummyInput);
+            dummyInput.value = noRekText;
+            dummyInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummyInput);
+
+            pemicuNotifikasiToast("Nomor rekening sekolah berhasil disalin!");
+        }
+
+        function konversiBulanFaktur(fakturStr) {
+            if (!fakturStr) return "-";
+            if (fakturStr.includes("Jan")) return "Januari 2026";
+            if (fakturStr.includes("Feb")) return "Februari 2026";
+            if (fakturStr.includes("Mar")) return "Maret 2026";
+            if (fakturStr.includes("Apr")) return "April 2026";
+            if (fakturStr.includes("Mei")) return "Mei 2026";
+            if (fakturStr.includes("Jun")) return "Juni 2026";
+            if (fakturStr.includes("Jul")) return "Juli 2026";
+            if (fakturStr.includes("Rid")) return "Agustus 2026";
+            if (fakturStr.includes("Sep")) return "September 2026";
+            if (fakturStr.includes("Okt")) return "Oktober 2026";
+            if (fakturStr.includes("Nop")) return "November 2026";
+            if (fakturStr.includes("Des")) return "Desember 2026";
+            return fakturStr;
+        }
+
+        function formatKeRupiahIDR(angka) {
+            return "Rp " + new Intl.NumberFormat('id-ID', { minimumFractionDigits: 0 }).format(angka);
+        }
+
+        function toggleDropdownKustom(idMenu) {
+            const targetMenu = document.getElementById(idMenu);
+            const statusTertutup = targetMenu.classList.contains('hidden');
+            
+            tutupSemuaDropdownKustom();
+            
+            if (statusTertutup) {
+                targetMenu.classList.remove('hidden');
+            }
+        }
+
+        function tutupSemuaDropdownKustom() {
+            document.getElementById('dropdown-tingkatan').classList.add('hidden');
+            document.getElementById('dropdown-murid').classList.add('hidden');
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('#btn-tingkatan') && !event.target.closest('#btn-murid') && 
+                !event.target.closest('#dropdown-tingkatan') && !event.target.closest('#dropdown-murid')) {
+                tutupSemuaDropdownKustom();
+            }
+        }
+
+        function pemicuNotifikasiToast(pesan) {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-message').innerText = pesan;
+            toast.classList.remove('hidden');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        window.onload = function() {
+            inisialisasiDatabaseTertanam();
+        }
+    </script>
+
+    <!-- HTML Notifikasi Toast -->
+    <div id="toast-notification" class="hidden fixed bottom-5 right-5 left-5 sm:left-auto bg-slate-950 border border-slate-800 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center justify-between space-x-4 transition-all duration-300 z-50 max-w-sm">
+        <span id="toast-message" class="text-xs font-semibold">Notifikasi...</span>
+    </div>
+
+</body>
+</html>
