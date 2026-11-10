@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMK Cendikia Bangsa</title>
+    <title>IPL Digital Realtime - SMK Cendikia Bangsa</title>
     
     <script>
         // MASUKKAN LINK CSV GOOGLE SHEETS ANDA PERMANEN DI SINI
-        const DEFAULT_SHEETS_URL = ""; 
+        const DEFAULT_SHEETS_URL = "https://google.com"; 
     </script>
 
     <!-- Tailwind CSS untuk Desain Modern & Responsif -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#059669', 
-                        secondary: '#0284c7'
+                        primary: '#1e40af', // DIUBAH: Biru Tua Royal untuk SMK
+                        secondary: '#3b82f6' // DIUBAH: Biru Terang variasi
                     }
                 }
             }
@@ -43,29 +43,30 @@
             max-height: 240px;
             overflow-y: auto;
         }
-    </style>
+    </script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased min-h-screen pb-12">
 
-    <!-- Header Utama Aplikasi -->
-    <header class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md sticky top-0 z-40">
+    <!-- Header Utama Aplikasi (DIUBAH: Menggunakan Gradasi Biru ke Indigo yang Gagah) -->
+    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-md sticky top-0 z-40">
         <div class="max-w-6xl mx-auto px-3 py-3 flex justify-between items-center gap-2">
             <div class="flex items-center space-x-2.5">
-                <div class="bg-white p-1.5 rounded-full text-emerald-600 shadow-inner">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <!-- DIUBAH: Ikon disesuaikan warna biru -->
+                <div class="bg-white p-1.5 rounded-full text-blue-700 shadow-inner">
+                    <svg xmlns="http://w3.org" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
                 </div>
                 <div>
                     <h1 class="text-lg font-bold tracking-wide">SMK Cendikia Bangsa</h1>
-                    <p class="text-[10px] text-emerald-100 opacity-90">Jl. Raya Pagedangan No. 19</p>
+                    <p class="text-[10px] text-blue-100 opacity-90">Sistem Informasi Database Realtime</p>
                 </div>
             </div>
             
-            <!-- Tombol Refresh Manual Minimalis Tanpa Teks -->
             <div class="flex items-center space-x-2">
-                <button onclick="paksaRefreshDataWarga()" title="Segarkan Data Terkini" class="p-2 bg-emerald-700 hover:bg-emerald-800 rounded-lg text-white shadow transition-colors flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <!-- DIUBAH: Tombol refresh mengikuti warna tema biru -->
+                <button onclick="paksaRefreshDataWarga()" title="Segarkan Data Terkini" class="p-2 bg-blue-800 hover:bg-blue-900 rounded-lg text-white shadow transition-colors flex items-center justify-center">
+                    <svg xmlns="http://w3.org" class="h-4 w-4 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.253 8H18" />
                     </svg>
                 </button>
@@ -76,868 +77,91 @@
     <!-- Konten Utama Bodi -->
     <main class="max-w-4xl mx-auto px-3 mt-4">
         
-        <!-- Notifikasi Kustom -->
+        <!-- Notifikasi Toast -->
         <div id="toast-notification" class="hidden fixed bottom-5 right-5 left-5 sm:left-auto bg-gray-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center justify-between space-x-4 transition-all duration-300 z-50">
             <span id="toast-message" class="text-sm font-medium">Pesan di sini</span>
             <button onclick="dismissToast()" class="text-gray-400 hover:text-white font-bold text-lg">&times;</button>
         </div>
 
-        <!-- Indikator Status Memuat Modern -->
-        <div id="loading-status-bar" class="hidden bg-emerald-50 border border-emerald-200 text-emerald-800 p-2.5 rounded-xl text-[11px] font-semibold mb-4 flex items-center gap-2">
-            <div class="animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-emerald-700"></div>
-            <span>Memperbarui informasi kas terbaru secara live dari Google Sheets perumahan...</span>
+        <!-- Indikator Status Memuat (DIUBAH: Menggunakan aksen warna biru) -->
+        <div id="loading-status-bar" class="bg-blue-50 border border-blue-200 text-blue-800 p-2.5 rounded-xl text-[11px] font-semibold mb-4 flex items-center gap-2">
+            <div class="animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-blue-700"></div>
+            <span>Memperbarui informasi database terbaru secara live dari Google Sheets...</span>
         </div>
 
-        <!-- ==================== AREA UTAMA: PENCARIAN WARGA ==================== -->
-        <section id="section-warga" class="block space-y-4">
+        <!-- AREA UTAMA: PENCARIAN -->
+        <section id="section-warga" class="space-y-4">
             
-            <!-- Ringkasan Statistik Cepat -->
+            <!-- Ringkasan Statistik Cepat (DIUBAH: Angka statistik menjadi biru) -->
             <div class="grid grid-cols-2 gap-3">
                 <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100">
-                    <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wider">Total Blok Terdata</p>
-                    <p id="stat-total-warga" class="text-xl font-bold text-emerald-600 mt-0.5">0</p>
+                    <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wider">Total Data Terklasifikasi</p>
+                    <p id="stat-total-warga" class="text-xl font-bold text-blue-600 mt-0.5">0</p>
                 </div>
                 <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-center">
                     <p class="text-[10px] text-gray-500 font-medium uppercase tracking-wider mb-0.5">Status Sinkronisasi</p>
-                    <div id="sync-badge-status" class="text-[10px] text-green-700 font-bold bg-green-50 px-1.5 py-0.5 rounded inline-flex items-center gap-1 w-max">
-                        <span class="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                    <div id="sync-badge-status" class="text-[10px] text-blue-700 font-bold bg-blue-50 px-1.5 py-0.5 rounded inline-flex items-center gap-1 w-max">
+                        <span class="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse"></span>
                         Terhubung
                     </div>
                 </div>
             </div>
 
-            <!-- 1. PANEL UTAMA: PILIH KLUSTER -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-                <div class="max-w-md relative">
-                    <h3 class="text-xs font-black text-gray-700 mb-1.5 flex items-center gap-1 uppercase tracking-wider">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                        PILIH TINGKATAN
-                    </h3>
-                    
-                    <!-- Pemicu Dropdown Kustom Kluster -->
-                    <button onclick="toggleDropdownKustom('menu-kluster-rt')" id="btn-kluster-rt" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-medium text-left flex justify-between items-center shadow-sm transition-all focus:ring-2 focus:ring-emerald-500">
-                        <span id="label-kluster-rt">-- Pilih Kluster Huruf Di Sini (Misal: B) --</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                    </button>
-                    
-                    <!-- Kontainer List Item Kustom Kluster -->
-                    <div id="menu-kluster-rt" class="hidden absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl z-30 dropdown-menu-kustom custom-scrollbar divide-y divide-gray-50">
-                        <!-- Diisi via JS -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2. PANEL BERBENTUK CASCADING: FILTER TAHAP BLOK WARGA -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-                <div class="max-w-md">
-                    <h3 class="text-xs font-black text-gray-700 mb-3 flex items-center gap-1 uppercase tracking-wider">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                        </svg>
-                        PILIH KELAS
-                    </h3>
-                    
-                    <div class="space-y-4 pl-1 border-l-2 border-emerald-100">
-                        <!-- Dropdown Tahap 1 Kustom -->
-                        <div class="relative">
-                            <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1 flex items-center gap-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                                </svg>
-                                Tahap 1: Pilih Nama Kluster Warga
-                            </label>
-                            <button onclick="toggleDropdownKustom('menu-tahap1-warga')" id="btn-tahap1-warga" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-medium text-left flex justify-between items-center shadow-sm transition-all focus:ring-2 focus:ring-emerald-500">
-                                <span id="label-tahap1-warga">-- Pilih Kluster Terlebih Dahulu --</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                            </button>
-                            <div id="menu-tahap1-warga" class="hidden absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl z-20 dropdown-menu-kustom custom-scrollbar divide-y divide-gray-50">
-                                <!-- Diisi via JS -->
-                            </div>
-                        </div>
-
-                        <!-- Dropdown Tahap 2 Kustom -->
-                        <div class="relative">
-                            <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1 flex items-center gap-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
-                                Tahap 2: PILIH MURID
-                            </label>
-                            <button disabled onclick="toggleDropdownKustom('menu-tahap2-warga')" id="btn-tahap2-warga" class="w-full bg-gray-100 border border-gray-200 rounded-xl px-3 py-2 text-xs font-medium text-left flex justify-between items-center shadow-sm transition-all text-gray-400 cursor-not-allowed">
-                                <span id="label-tahap2-warga">-- Pilih Nomor Blok (Pilih Tahap 1 Dulu) --</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-gray-300" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                            </button>
-                            <div id="menu-tahap2-warga" class="hidden absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl z-20 dropdown-menu-kustom custom-scrollbar divide-y divide-gray-50">
-                                <!-- Diisi via JS -->
-                            </div>
-                            <p class="text-[9px] text-gray-400 mt-1">Daftar nomor blok disaring rapat hanya memunculkan unit dari kluster terpilih tanpa menumpuk.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-        
-        <section id="section-admin" class="hidden"></section>
-    </main>
-
-    <!-- ==================== MODAL 1: DETAIL INDIVIDU WARGA ==================== -->
-    <div id="detail-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-60 flex items-center justify-center z-50 p-2 sm:p-4 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
-            <div class="bg-emerald-600 text-white px-4 py-3 flex justify-between items-center flex-shrink-0">
-                <div>
-                    <div class="flex items-center space-x-1.5">
-                        <span id="modal-id-kode" class="bg-emerald-800 text-[9px] font-bold px-1.5 py-0.5 rounded text-emerald-200">KODE</span>
-                        <p class="text-[10px] text-emerald-100 font-medium">Histori Laporan IPL</p>
-                    </div>
-                    <h3 id="modal-blok-title" class="text-sm font-bold mt-0.5 truncate max-w-[280px] sm:max-w-md">Nama Blok</h3>
-                </div>
-                <button onclick="closeModal()" class="text-emerald-100 hover:text-white text-xl font-bold p-1">&times;</button>
-            </div>
-            
-            <div class="bg-gray-50 px-4 py-2.5 border-b border-gray-200 flex-shrink-0">
-                <div class="flex items-center gap-1 text-[10px] font-bold text-gray-600 uppercase tracking-wider mb-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    Filter Rentang Waktu Bulan:
-                </div>
-                <div class="flex items-center justify-between gap-1.5 bg-white p-2 rounded-xl border border-gray-200 shadow-sm flex-wrap sm:flex-nowrap">
-                    <div class="flex items-center space-x-1 w-full sm:w-auto justify-between sm:justify-start">
-                        <span class="text-[10px] text-gray-400 font-medium">Dari</span>
-                        <input type="date" id="modal-tgl-mulai" onchange="refreshModalTable()"
-                               class="border border-gray-300 rounded px-1.5 py-0.5 text-[11px] font-bold font-mono text-gray-700 focus:outline-none focus:ring-1 focus:ring-emerald-500">
-                    </div>
-                    <div class="flex items-center space-x-1 w-full sm:w-auto justify-between sm:justify-start">
-                        <span class="text-[10px] text-gray-400 font-medium">s/d</span>
-                        <input type="date" id="modal-tgl-selesai" onchange="refreshModalTable()"
-                               class="border border-gray-300 rounded px-1.5 py-0.5 text-[11px] font-bold font-mono text-gray-700 focus:outline-none focus:ring-1 focus:ring-emerald-500">
-                    </div>
-                    <button onclick="resetModalToCurrentYear()" class="text-[9px] text-emerald-600 hover:text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded w-full sm:w-auto mt-1 sm:mt-0 text-center">
-                        Tahun Ini
-                    </button>
-                </div>
-            </div>
-            
-            <div class="p-2 overflow-y-auto custom-scrollbar flex-1 bg-white">
-                <table class="w-full text-left border-collapse table-fixed">
-                    <thead>
-                        <tr class="border-b border-gray-200 text-gray-400 font-bold uppercase text-[9px] tracking-wider bg-gray-50/50">
-                            <th class="py-1.5 px-2 w-[32%] text-left">Bulan</th>
-                            <th class="py-1.5 px-1 w-[26%] text-left">Tgl Terima</th>
-                            <th class="py-1.5 px-1 w-[24%] text-right">Rupiah</th>
-                            <th class="py-1.5 px-2 w-[18%] text-center">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="modal-table-rows" class="divide-y divide-gray-100">
-                        <!-- Injeksi Dinamis -->
-                    </tbody>
-                </table>
-                <div id="modal-empty-rows" class="hidden text-center py-6 text-gray-400 text-xs">
-                    Tidak ada bulan tagihan yang masuk rentang saring.
-                </div>
-            </div>
-            
-            <div class="bg-gray-50 px-4 py-2 border-t border-gray-100 flex-shrink-0 flex justify-end">
-                <button onclick="closeModal()" class="px-4 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-semibold rounded-lg transition-colors">
-                    Tutup
+            <!-- PANEL 1: PILIH KLUSTER (DIUBAH: Warna teks petunjuk menjadi biru) -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 relative">
+                <h3 class="text-xs font-black text-gray-700 mb-1.5 flex items-center gap-1 uppercase tracking-wider">
+                    PILIH KATEGORI / KLUSTER
+                </h3>
+                <button onclick="toggleDropdownKustom('menu-kluster-rt')" id="btn-kluster-rt" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-medium text-left flex justify-between items-center shadow-sm transition-all focus:ring-2 focus:ring-blue-500">
+                    <span id="label-kluster-rt">-- Pilih Kluster Huruf Di Sini (Misal: B) --</span>
+                    <svg xmlns="http://w3.org" class="h-3 w-3 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                 </button>
+                <div id="menu-kluster-rt" class="hidden absolute left-4 right-4 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl z-30 dropdown-menu-kustom custom-scrollbar divide-y divide-gray-50"></div>
             </div>
-        </div>
-    </div>
 
-    <!-- ==================== MODAL 2: LAPORAN REKAP KLUSTER PAK RT ==================== -->
-    <div id="kluster-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-60 flex items-center justify-center z-50 p-1 sm:p-2 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-5xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[96vh]">
-            <div class="bg-teal-700 text-white px-3 py-2.5 flex justify-between items-center flex-shrink-0">
-                <div>
-                    <h3 class="text-xs sm:text-sm font-bold flex items-center gap-1.5">
-                        <span>Laporan Kluster Blok:</span> 
-                        <span id="kluster-title-letter" class="bg-teal-900 px-2 py-0.5 rounded text-yellow-300 font-mono font-black text-xs">B</span>
-                    </h3>
-                </div>
-                <button onclick="tutupLaporanKluster()" class="text-teal-100 hover:text-white text-xl font-bold p-1">&times;</button>
-            </div>
-            
-            <div class="bg-gray-100 px-3 py-2 border-b border-gray-200 flex flex-wrap items-center justify-between gap-2 flex-shrink-0">
-                <div class="flex items-center gap-2 bg-white p-1.5 rounded-xl border border-gray-200 shadow-sm text-[10px] w-full sm:w-auto">
-                    <div class="flex items-center space-x-1">
-                        <span class="text-gray-400">Dari:</span>
-                        <select id="kluster-bulan-mulai" onchange="renderTabelKluster()" class="border rounded text-[11px] p-0.5 bg-gray-50 text-gray-700 focus:outline-none">
-                            <option value="01">Jan</option><option value="02">Feb</option><option value="03">Mar</option><option value="04">Apr</option>
-                            <option value="05">Mei</option><option value="06">Jun</option><option value="07">Jul</option><option value="08">Agu</option>
-                            <option value="09">Sep</option><option value="10">Okt</option><option value="11">Nov</option><option value="12">Des</option>
-                        </select>
-                        <select id="kluster-tahun-mulai" onchange="renderTabelKluster()" class="border rounded text-[11px] p-0.5 bg-gray-50 text-gray-700 font-bold focus:outline-none">
-                            <!-- JS Inject -->
-                        </select>
-                    </div>
-                    <div class="flex items-center space-x-1 border-l pl-2 border-gray-200">
-                        <span class="text-gray-400">s/d:</span>
-                        <select id="kluster-bulan-selesai" onchange="renderTabelKluster()" class="border rounded text-[11px] p-0.5 bg-gray-50 text-gray-700 focus:outline-none">
-                            <option value="01">Jan</option><option value="02">Feb</option><option value="03">Mar</option><option value="04">Apr</option>
-                            <option value="05">Mei</option><option value="06">Jun</option><option value="07">Jul</option><option value="08">Agu</option>
-                            <option value="09">Sep</option><option value="10">Okt</option><option value="11">Nov</option><option value="12">Des</option>
-                        </select>
-                        <select id="kluster-tahun-selesai" onchange="renderTabelKluster()" class="border rounded text-[11px] p-0.5 bg-gray-50 text-gray-700 font-bold focus:outline-none">
-                            <!-- JS Inject -->
-                        </select>
-                    </div>
-                </div>
-
-                <button onclick="jalankanEksporTabelKlusterKeExcel()" class="inline-flex items-center space-x-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] px-3 py-1.5 rounded-lg shadow-sm transition-colors w-full sm:w-auto justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    <span>Ekspor Data ke Excel</span>
+            <!-- PANEL 2: PILIH BLOK / UNIT -->
+            <div id="panel-blok-container" class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 relative hidden">
+                <h3 class="text-xs font-black text-gray-700 mb-1.5 flex items-center gap-1 uppercase tracking-wider">
+                    PILIH BLOK & NOMOR UNIT
+                </h3>
+                <button onclick="toggleDropdownKustom('menu-blok-warga')" id="btn-blok-warga" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-medium text-left flex justify-between items-center shadow-sm transition-all focus:ring-2 focus:ring-blue-500">
+                    <span id="label-blok-warga">-- Pilih Nomor Unit --</span>
+                    <svg xmlns="http://w3.org" class="h-3 w-3 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                 </button>
+                <div id="menu-blok-warga" class="hidden absolute left-4 right-4 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl z-30 dropdown-menu-kustom custom-scrollbar divide-y divide-gray-50"></div>
             </div>
 
-            <!-- Kontainer Utama Scroll Tabel Kluster -->
-            <div class="p-1 overflow-auto custom-scrollbar flex-1 bg-gray-50" id="container-tabel-kluster-rt">
-                <div class="inline-block min-w-full align-middle bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <table id="tabel-rekap-kluster-id" class="min-w-full text-left text-[9px] sm:text-[11px] border-collapse table-fixed">
-                        <thead id="kluster-thead-element">
-                            <!-- Header Kolom Bulan Dinamis via JS -->
+            <!-- PANEL 3: DETAIL RIWAYAT DATA -->
+            <div id="panel-hasil-pembayaran" class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hidden">
+                <div class="border-b border-gray-100 pb-3 mb-3">
+                    <h2 id="view-nama-warga" class="text-base font-bold text-gray-900">Nama Lengkap</h2>
+                    <p id="view-id-blok" class="text-xs font-medium text-blue-600 mt-0.5">Detail Unit: -</p>
+                </div>
+                
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-700 font-bold">
+                                <th class="p-2.5 rounded-l-lg">Periode / Keterangan</th>
+                                <th class="p-2.5">Tanggal Sinkron</th>
+                                <th class="p-2.5">Jumlah</th>
+                                <th class="p-2.5 rounded-r-lg text-center">Status</th>
+                            </tr>
                         </thead>
-                        <tbody id="kluster-tabel-rows" class="divide-y divide-gray-200">
-                            <!-- Injeksi Baris Kolektif Per Huruf via JS -->
+                        <tbody id="table-body-tagihan" class="divide-y divide-gray-100 text-gray-600">
+                            <!-- Diisi via JS -->
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="bg-gray-100 px-3 py-2 text-right border-t border-gray-200 flex-shrink-0 flex justify-between items-center text-[10px]">
-                <div class="text-gray-400 font-medium">
-                    ✔ <span class="text-green-600 bg-green-50 px-1 rounded font-bold">Lunas</span> | ✘ <span class="text-red-500 bg-red-50 px-1 rounded font-bold">Belum</span>
-                </div>
-                <button onclick="tutupLaporanKluster()" class="px-4 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-lg shadow-sm text-xs">
-                    Tutup
-                </button>
-            </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <!-- ==================== LOGIKA CORE JAVASCRIPT ==================== -->
+    <!-- LOGIKA JAVASCRIPT APLIKASI UTAMA -->
     <script>
-        const SHEETS_URL_KEY = 'BALE_TIRTAWANA_GOOGLE_SHEETS_CSV_URL';
-        
-        const simulasiLokalData = [
-            {
-                "id_kode": "B-001",
-                "nama_blok": "Blok B1-1 | Ibu Musyarofah",
-                "transaksi_list": [
-                    { "label_bulan": "Januari 2026", "lunas": true, "tgl_terima": "09 Jan 2026", "nominal": 50000, "bulan_idx": "2026-01" },
-                    { "label_bulan": "Februari 2026", "lunas": true, "tgl_terima": "06 Mar 2026", "nominal": 50000, "bulan_idx": "2026-02" },
-                    { "label_bulan": "Maret 2026", "lunas": true, "tgl_terima": "06 Mar 2026", "nominal": 50000, "bulan_idx": "2026-03" },
-                    { "label_bulan": "April 2026", "lunas": true, "tgl_terima": "20 Apr 2026", "nominal": 50000, "bulan_idx": "2026-04" },
-                    { "label_bulan": "Mei 2026", "lunas": true, "tgl_terima": "20 Apr 2026", "nominal": 50000, "bulan_idx": "2026-05" },
-                    { "label_bulan": "November 2026", "lunas": false, "tgl_terima": "-", "nominal": 0, "bulan_idx": "2026-11" }
-                ]
-            }
-        ];
+        let databaseWarga = {};
+        let klusterTerpilih = "";
 
-        let databaseBlokMaster = [];
-        let blokAktifDiModal = null;
-        let klusterTerpilihCascading = "";
-
-        window.onload = function() {
-            let savedUrl = localStorage.getItem(SHEETS_URL_KEY);
+        document.addEventListener("DOMContentLoaded", () => {
+            muatDataDariSheets();
             
-            if (typeof DEFAULT_SHEETS_URL !== "undefined" && DEFAULT_SHEETS_URL !== "") {
-                if (!savedUrl || savedUrl !== DEFAULT_SHEETS_URL) {
-                    localStorage.clear(); 
-                    localStorage.setItem(SHEETS_URL_KEY, DEFAULT_SHEETS_URL);
-                    savedUrl = DEFAULT_SHEETS_URL;
-                }
-            }
-
-            bukaDataFallbackAwal();
-
-            if (savedUrl) {
-                if (savedUrl.includes("/edit") || savedUrl.includes("#gid=")) {
-                    localStorage.removeItem(SHEETS_URL_KEY);
-                    bukaDataFallbackAwal();
-                    return;
-                }
-                ambilDataDariGoogleSheets(savedUrl);
-            }
-
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.relative')) {
-                    tutupSemuaDropdownKustom();
-                }
-            });
-        };
-
-        function toggleDropdownKustom(menuId) {
-            const menu = document.getElementById(menuId);
-            const isHidden = menu.classList.contains('hidden');
-            tutupSemuaDropdownKustom();
-            if (isHidden) {
-                menu.classList.remove('hidden');
-            }
-        }
-
-        function tutupSemuaDropdownKustom() {
-            document.getElementById('menu-kluster-rt').classList.add('hidden');
-            document.getElementById('menu-tahap1-warga').classList.add('hidden');
-            document.getElementById('menu-tahap2-warga').classList.add('hidden');
-        }
-
-        function paksaRefreshDataWarga() {
-            let savedUrl = localStorage.getItem(SHEETS_URL_KEY);
-            if (savedUrl) {
-                let hancurkanCacheUrl = savedUrl + (savedUrl.includes("?") ? "&" : "?") + "t=" + new Date().getTime();
-                showToast("Memaksa browser HP membersihkan cache & mendownload data terbaru...");
-                ambilDataDariGoogleSheets(hancurkanCacheUrl);
-            } else {
-                showToast("Tautan Google Sheets belum terpasang di baris kode.", true);
-            }
-        }
-
-        function bukaDataFallbackAwal() {
-            databaseBlokMaster = [...simulasiLokalData];
-            matangkanDatabaseKeUI();
-            document.getElementById('loading-status-bar').classList.add('hidden');
-            
-            let currentUrl = localStorage.getItem(SHEETS_URL_KEY) || "";
-            if (currentUrl !== "") {
-                document.getElementById('sync-badge-status').className = "text-[10px] text-green-700 font-bold bg-green-50 px-1.5 py-0.5 rounded inline-flex items-center gap-1";
-                document.getElementById('sync-badge-status').innerHTML = "<span class='h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse'></span> Terhubung";
-            } else {
-                document.getElementById('sync-badge-status').className = "text-[10px] text-amber-700 font-bold bg-amber-50 px-1.5 py-0.5 rounded inline-flex items-center gap-1";
-                document.getElementById('sync-badge-status').innerHTML = "⚠️ Standby";
-            }
-        }
-
-        function ambilDataDariGoogleSheets(url) {
-            document.getElementById('loading-status-bar').classList.remove('hidden');
-            let finalUrl = url;
-            if (window.location.origin.includes("google") || window.location.href.includes("ai-gateway") || !window.location.origin.startsWith("http")) {
-                finalUrl = "https://allorigins.win" + encodeURIComponent(url);
-            }
-
-            fetch(finalUrl)
-                .then(response => {
-                    if (!response.ok) throw new Error("Gagal mengambil dokumen.");
-                    return response.text();
-                })
-                .then(csvText => {
-                    if (csvText.includes("<!DOCTYPE html>") || csvText.includes("google-site-verification")) {
-                        throw new Error("Bukan data CSV.");
-                    }
-                    prosesTeksCSV(csvText);
-                })
-                .catch(err => {
-                    console.error(err);
-                    let altUrl = "https://corsproxy.io?" + encodeURIComponent(url);
-                    fetch(altUrl)
-                        .then(r => r.text())
-                        .then(csv => {
-                            if (csv.includes("<!DOCTYPE html>")) throw new Error();
-                            prosesTeksCSV(csv);
-                        })
-                        .catch(e => {
-                            showToast("Gagal menyinkronkan data terbaru. Menampilkan data cadangan.", true);
-                            bukaDataFallbackAwal();
-                        });
-                });
-        }
-
-        function prosesTeksCSV(text) {
-            try {
-                if(!text || text.trim().length === 0) return;
-                let lines = [];
-                let row = [""];
-                let inQuotes = false;
-
-                for (let i = 0; i < text.length; i++) {
-                    let c = text[i];
-                    let next = text[i+1];
-                    if (c === '"') {
-                        if (inQuotes && next === '"') { row[row.length - 1] += '"'; i++; }
-                        else { inQuotes = !inQuotes; }
-                    } else if (c === ',' && !inQuotes) {
-                        row.push('');
-                    } else if ((c === '\r' || c === '\n') && !inQuotes) {
-                        if (c === '\r' && next === '\n') { i++; }
-                        lines.push(row);
-                        row = [''];
-                    } else {
-                        row[row.length - 1] += c;
-                    }
-                }
-                if (row.length > 1 || row[0] !== '') lines.push(row);
-
-                let petaBlokWarga = {};
-
-                for (let r = 0; r < lines.length; r++) {
-                    const rowData = lines[r];
-                    if (!rowData || rowData.length < 3) continue;
-
-                    const colA_Kode  = rowData[0] ? rowData[0].toString().trim() : "";
-                    const colB_Blok  = rowData[1] ? rowData[1].toString().trim() : "";
-                    const colC_Bulan = rowData[2] ? rowData[2].toString().trim() : "";
-                    const colD_Terima = rowData[3] ? rowData[3].toString().trim() : "";
-                    const colE_Bayar  = rowData[4] ? rowData[4].toString().trim() : "";
-
-                    if (!colA_Kode || !colC_Bulan) continue;
-                    
-                    let bersihKode = colA_Kode.toLowerCase().replace(/[^a-z0-9]/g, "");
-                    let bersihBulan = colC_Bulan.toLowerCase().replace(/[^a-z0-9]/g, "");
-                    if (bersihBulan.includes("faktur") || bersihKode.includes("kode") || bersihKode === "no") continue;
-
-                    if (!petaBlokWarga[colA_Kode]) {
-                        petaBlokWarga[colA_Kode] = {
-                            "id_kode": colA_Kode,
-                            "nama_blok": colB_Blok || `Blok ${colA_Kode}`,
-                            "transaksi_list": []
-                        };
-                    }
-
-                    const parts = colC_Bulan.split(/\s+/);
-                    let bulanLabelPanjang = colC_Bulan;
-                    let idxBulanMulai = "2026-01";
-                    
-                    if (parts.length >= 3) {
-                        const blnKecKecil = parts[1].toLowerCase().trim();
-                        const namaBulanReal = pemetaanBulanNama[blnKecKecil] || parts[1];
-                        const angkaBulanReal = pemetaanBulanAngka[blnKecKecil] || "01";
-                        
-                        bulanLabelPanjang = `${namaBulanReal} ${parts[2].trim()}`;
-                        idxBulanMulai = `${parts[2].trim()}-${angkaBulanReal}`; 
-                    }
-
-                    let statusLunas = false;
-                    let tglTerimaFinal = "-";
-                    let uangRupiah = 0;
-
-                    if (colE_Bayar) {
-                        let stringUang = colE_Bayar.toString().trim();
-                        if (stringUang.includes(",") && stringUang.includes(".")) {
-                            stringUang = stringUang.replace(/,/g, ''); 
-                            uangRupiah = parseFloat(stringUang) || 0;
-                        } else {
-                            let cleanNum = stringUang.replace(/\./g, '').replace(/,/g, '.');
-                            uangRupiah = parseFloat(cleanNum) || 0;
-                        }
-                    }
-
-                    if (uangRupiah > 0 && colD_Terima !== "" && colD_Terima !== "-") {
-                        statusLunas = true;
-                        tglTerimaFinal = colD_Terima;
-                    }
-
-                    petaBlokWarga[colA_Kode].transaksi_list.push({
-                        "label_bulan": bulanLabelPanjang,
-                        "lunas": statusLunas,
-                        "tgl_terima": tglTerimaFinal,
-                        "nominal": uangRupiah,
-                        "bulan_idx": idxBulanMulai
-                    });
-                }
-
-                let arrRes = Object.values(petaBlokWarga);
-                if(arrRes.length > 0) {
-                    databaseBlokMaster = arrRes;
-                    matangkanDatabaseKeUI();
-                    document.getElementById('sync-badge-status').className = "text-[10px] text-green-700 font-bold bg-green-50 px-1.5 py-0.5 rounded inline-flex items-center gap-1";
-                    document.getElementById('sync-badge-status').innerHTML = "<span class='h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse'></span> Terhubung";
-                    showToast(`Sukses memuat total ${databaseBlokMaster.length} data blok warga.`);
-                } else {
-                    throw new Error("Data array kosong.");
-                }
-            } catch(e) {
-                console.error(e);
-                bukaDataFallbackAwal();
-            } finally {
-                document.getElementById('loading-status-bar').classList.add('hidden');
-            }
-        }
-
-        function matangkanDatabaseKeUI() {
-            initDropdownTahapKlusterKustom();
-            initDropdownKlusterRTKustom();
-            document.getElementById('stat-total-warga').textContent = databaseBlokMaster.length;
-        }
-
-        function initDropdownTahapKlusterKustom() {
-            const menu = document.getElementById('menu-tahap1-warga');
-            if(!menu) return;
-            menu.innerHTML = '';
-            
-            let setPrefix = new Set();
-            databaseBlokMaster.forEach(item => {
-                if (item.id_kode && item.id_kode.length > 0) {
-                    let hurufPertama = item.id_kode.toString().trim().charAt(0).toUpperCase();
-                    if(/[A-Z]/.test(hurufPertama)) {
-                        setPrefix.add(hurufPertama);
-                    }
-                }
-            });
-
-            Array.from(setPrefix).sort().forEach(prefix => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = "px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-emerald-50 hover:text-emerald-800 cursor-pointer transition-colors";
-                itemDiv.textContent = `Kluster ${prefix}`;
-                itemDiv.onclick = function() {
-                    document.getElementById('label-tahap1-warga').textContent = `Kluster ${prefix}`;
-                    menu.classList.add('hidden');
-                    filterDropdownNomorBlokWargaKustom(prefix);
-                };
-                menu.appendChild(itemDiv);
-            });
-            
-            const btnTahap2 = document.getElementById('btn-tahap2-warga');
-            btnTahap2.disabled = true;
-            btnTahap2.className = "w-full bg-gray-100 border border-gray-200 rounded-xl px-3 py-2 text-xs font-medium text-left flex justify-between items-center shadow-sm text-gray-400 cursor-not-allowed";
-            document.getElementById('label-tahap2-warga').textContent = "-- Pilih Nomor Blok (Pilih Tahap 1 Dulu) --";
-            document.getElementById('menu-tahap2-warga').innerHTML = '';
-        }
-
-        function filterDropdownNomorBlokWargaKustom(prefixTerpilih) {
-            klusterTerpilihCascading = prefixTerpilih;
-            const btnTahap2 = document.getElementById('btn-tahap2-warga');
-            const menuTahap2 = document.getElementById('menu-tahap2-warga');
-            
-            btnTahap2.disabled = false;
-            btnTahap2.className = "w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-medium text-left flex justify-between items-center shadow-sm transition-all focus:ring-2 focus:ring-emerald-500 text-gray-800 cursor-pointer";
-            document.getElementById('label-tahap2-warga').textContent = "-- Pilih Nomor Blok Warga Di Sini --";
-            menuTahap2.innerHTML = '';
-            
-            const unitTersaring = databaseBlokMaster.filter(item => item.id_kode.toString().toUpperCase().startsWith(prefixTerpilih.toUpperCase()));
-            unitTersaring.sort((a, b) => a.id_kode.localeCompare(b.id_kode));
-            
-            unitTersaring.forEach(item => {
-                const rowItem = document.createElement('div');
-                rowItem.className = "px-3 py-1.5 text-xs font-medium text-gray-800 hover:bg-emerald-50 hover:text-emerald-800 cursor-pointer transition-colors truncate";
-                rowItem.textContent = `${item.id_kode} - ${item.nama_blok}`;
-                rowItem.onclick = function() {
-                    document.getElementById('label-tahap2-warga').textContent = `${item.id_kode} - ${item.nama_blok}`;
-                    menuTahap2.classList.add('hidden');
-                    bukaModalDetail(item);
-                };
-                menuTahap2.appendChild(rowItem);
-            });
-        }
-
-        function initDropdownKlusterRTKustom() {
-            const menu = document.getElementById('menu-kluster-rt');
-            if(!menu) return;
-            menu.innerHTML = '';
-            
-            let setPrefix = new Set();
-            databaseBlokMaster.forEach(item => {
-                if (item.id_kode && item.id_kode.length > 0) {
-                    let hurufPertama = item.id_kode.toString().trim().charAt(0).toUpperCase();
-                    if(/[A-Z]/.test(hurufPertama)) {
-                        setPrefix.add(hurufPertama);
-                    }
-                }
-            });
-
-            Array.from(setPrefix).sort().forEach(prefix => {
-                const rowItem = document.createElement('div');
-                rowItem.className = "px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-teal-50 hover:text-teal-800 cursor-pointer transition-colors";
-                rowItem.textContent = `Kluster Blok / Prefix "${prefix}"`;
-                rowItem.onclick = function() {
-                    document.getElementById('label-kluster-rt').textContent = `Kluster Blok / Prefix "${prefix}"`;
-                    menu.classList.add('hidden');
-                    bukaLaporanKlusterCerdas(prefix);
-                };
-                menu.appendChild(rowItem);
-            });
-        }
-
-        function bukaModalDetail(item) {
-            blokAktifDiModal = item;
-            document.getElementById('modal-id-kode').textContent = `ID: ${item.id_kode}`;
-            document.getElementById('modal-blok-title').textContent = item.nama_blok;
-            resetModalToCurrentYear();
-            document.getElementById('detail-modal').classList.remove('hidden');
-        }
-
-        function resetModalToCurrentYear() {
-            const tahunSekarang = new Date().getFullYear();
-            document.getElementById('modal-tgl-mulai').value = `${tahunSekarang}-01-01`;
-            document.getElementById('modal-tgl-selesai').value = `${tahunSekarang}-12-31`;
-            refreshModalTable();
-        }
-
-        function refreshModalTable() {
-            if (!blokAktifDiModal) return;
-            const tbody = document.getElementById('modal-table-rows');
-            const emptyState = document.getElementById('modal-empty-rows');
-            tbody.innerHTML = '';
-
-            const tglMulaiStr = document.getElementById('modal-tgl-mulai').value;
-            const tglSelesaiStr = document.getElementById('modal-tgl-selesai').value;
-            if (!tglMulaiStr || !tglSelesaiStr) { emptyState.classList.remove('hidden'); return; }
-
-            const startYearMonth = tglMulaiStr.substring(0, 7);
-            const endYearMonth = tglSelesaiStr.substring(0, 7);
-            let barisTercetak = 0;
-
-            blokAktifDiModal.transaksi_list.forEach(tx => {
-                if (tx.bulan_idx < startYearMonth || tx.bulan_idx > endYearMonth) return;
-                barisTercetak++;
-                
-                let tglPerangkatHP = tx.tgl_terima;
-                if(tglPerangkatHP && tglPerangkatHP.length > 9) {
-                    const kepingan = tglPerangkatHP.split(" ");
-                    if(kepingan.length === 3) {
-                        tglPerangkatHP = `${kepingan[0]} ${kepingan[1]} ${kepingan[2].substring(2)}`;
-                    }
-                }
-
-                const tr = document.createElement('tr');
-                tr.className = tx.lunas ? "hover:bg-gray-50 bg-green-50/20 text-gray-900" : "hover:bg-gray-50 text-gray-400 bg-gray-50/10";
-                tr.innerHTML = `
-                    <td class="py-1 px-2 text-[10px] sm:text-xs font-semibold overflow-hidden truncate whitespace-nowrap text-left ${tx.lunas ? 'text-gray-900' : 'text-gray-400'}">${tx.label_bulan}</td>
-                    <td class="py-1 px-1 text-[10px] sm:text-xs font-mono overflow-hidden truncate whitespace-nowrap text-left ${tx.lunas ? 'text-gray-700' : 'text-gray-400'}">${tglPerangkatHP}</td>
-                    <td class="py-1 px-1 text-[10px] sm:text-xs font-mono font-bold text-right ${tx.lunas ? 'text-emerald-700' : 'text-gray-400'}">${formatRupiah(tx.nominal)}</td>
-                    <td class="py-1 px-2 text-center whitespace-nowrap">
-                        ${tx.lunas ? `<span class="bg-green-600 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded shadow-sm">LUNAS</span>` : `<span class="bg-gray-200 text-gray-400 text-[8px] font-bold px-1 py-0.5 rounded">BELUM</span>`}
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-            if (barisTercetak === 0) emptyState.classList.remove('hidden'); else emptyState.classList.add('hidden');
-        }
-
-        function bukaLaporanKlusterCerdas(prefix) {
-            document.getElementById('kluster-title-letter').textContent = prefix;
-            let setTahun = new Set();
-            databaseBlokMaster.forEach(item => {
-                if (item.id_kode.toUpperCase().startsWith(prefix)) {
-                    item.transaksi_list.forEach(tx => { if (tx.bulan_idx) setTahun.add(tx.bulan_idx.split("-")[0]); });
-                }
-            });
-
-            const tahunSekarangString = new Date().getFullYear().toString();
-            const tahunSekarangInt = new Date().getFullYear();
-            setTahun.add((tahunSekarangInt - 1).toString());
-            setTahun.add(tahunSekarangString);
-            setTahun.add((tahunSekarangInt + 1).toString());
-
-            const selectThnMulai = document.getElementById('kluster-tahun-mulai');
-            const selectThnSelesai = document.getElementById('kluster-tahun-selesai');
-            selectThnMulai.innerHTML = ''; selectThnSelesai.innerHTML = '';
-
-            Array.from(setTahun).sort().forEach(thn => {
-                const opt1 = document.createElement('option'); opt1.value = thn; opt1.textContent = thn; selectThnMulai.appendChild(opt1);
-                const opt2 = document.createElement('option'); opt2.value = thn; opt2.textContent = thn; selectThnSelesai.appendChild(opt2);
-            });
-
-            document.getElementById('kluster-bulan-mulai').value = "01";
-            selectThnMulai.value = tahunSekarangString;
-            document.getElementById('kluster-bulan-selesai').value = "12";
-            selectThnSelesai.value = tahunSekarangString;
-
-            renderTabelKluster();
-            document.getElementById('kluster-modal').classList.remove('hidden');
-        }
-
-        let urutanBulanDinamisGlobalUntukEkspor = [];
-
-        function renderTabelKluster() {
-            const prefix = document.getElementById('kluster-title-letter').textContent;
-            const startM = document.getElementById('kluster-bulan-mulai').value;
-            const startY = document.getElementById('kluster-tahun-mulai').value;
-            const endM = document.getElementById('kluster-bulan-selesai').value;
-            const endY = document.getElementById('kluster-tahun-selesai').value;
-
-            const startVal = `${startY}-${startM}`;
-            const endVal = `${endY}-${endM}`;
-            const thead = document.getElementById('kluster-thead-element');
-            const tbody = document.getElementById('kluster-tabel-rows');
-            tbody.innerHTML = ''; thead.innerHTML = '';
-
-            if (startVal > endVal) {
-                tbody.innerHTML = `<tr><td colspan="3" class="py-4 text-center text-gray-400 text-xs bg-white">Rentang waktu terbalik.</td></tr>`;
-                return;
-            }
-
-            let urutanBulanDinamis = [];
-            let tanggalBerjalan = new Date(startY, parseInt(startM) - 1, 1);
-            let tanggalAkhir = new Date(endY, parseInt(endM) - 1, 1);
-
-            while (tanggalBerjalan <= tanggalAkhir) {
-                let thn = tanggalBerjalan.getFullYear();
-                let blnIdx = (tanggalBerjalan.getMonth() + 1).toString().padStart(2, '0');
-                urutanBulanDinamis.push({
-                    idx: `${thn}-${blnIdx}`,
-                    labelSingkat: `${singkatanBulanNama[tanggalBerjalan.getMonth()]} ${thn.toString().substring(2)}`,
-                    labelPanjang: `${pemetaanBulanNama[singkatanBulanNama[tanggalBerjalan.getMonth()].toLowerCase()]} ${thn}`
-                });
-                tanggalBerjalan.setMonth(tanggalBerjalan.getMonth() + 1);
-            }
-
-            urutanBulanDinamisGlobalUntukEkspor = [...urutanBulanDinamis];
-
-            let colgroupHtml = `
-                <colgroup>
-                    <col class="w-[50px] sm:w-[65px]">
-                    <col class="w-[145px] sm:w-[220px]">
-            `;
-            urutanBulanDinamis.forEach(() => { colgroupHtml += `<col class="w-[42px] sm:w-[55px]">`; });
-            colgroupHtml += `<col class="w-[45px] sm:w-[60px]"></colgroup>`;
-
-            let headerHtml = colgroupHtml + `
-                <tr class="bg-gray-100 border-b border-gray-200 text-gray-700 font-bold text-center uppercase text-[8px] sm:text-[10px]">
-                    <th class="py-2 px-0.5 border-r border-gray-200 sticky left-0 bg-gray-100 z-20 text-center shadow-sm">Kode</th>
-                    <th class="py-2 px-1 border-r border-gray-200 sticky left-[50px] sm:left-[65px] bg-gray-100 z-20 text-left shadow-sm">Nama Blok</th>
-            `;
-            urutanBulanDinamis.forEach(b => { headerHtml += `<th class="py-2 px-0.5 border-r border-gray-200 text-center">${b.labelSingkat}</th>`; });
-            headerHtml += `<th class="py-2 px-0.5 bg-emerald-50 text-emerald-800 font-black">Total</th></tr>`;
-            thead.innerHTML = headerHtml;
-
-            const filteredUnits = databaseBlokMaster.filter(item => item.id_kode.toString().toUpperCase().startsWith(prefix));
-            filteredUnits.sort((a, b) => a.id_kode.localeCompare(b.id_kode));
-
-            filteredUnits.forEach(unit => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-gray-50 text-gray-700 bg-white border-b border-gray-100 text-center text-[9px] sm:text-[11px]";
-                
-                let rowHtml = `
-                    <td class="py-1.5 px-0.5 border-r border-gray-200 text-center font-mono font-bold bg-gray-100 sticky left-0 z-10 shadow-sm">${unit.id_kode}</td>
-                    <td class="py-1.5 px-1 border-r border-gray-200 text-left font-bold bg-white sticky left-[50px] sm:left-[65px] z-10 shadow-sm overflow-hidden truncate whitespace-nowrap max-w-[145px] sm:max-w-[220px] text-gray-900">${unit.nama_blok}</td>
-                `;
-                let lunasCount = 0;
-                urutanBulanDinamis.forEach(b => {
-                    const matchTx = unit.transaksi_list.find(tx => tx.bulan_idx === b.idx);
-                    if (matchTx && matchTx.lunas) {
-                        lunasCount++;
-                        rowHtml += `<td class="py-1.5 px-0.5 border-r border-gray-100 bg-green-50/20 text-green-600 font-extrabold text-[10px] sm:text-xs">✔</td>`;
-                    } else {
-                        rowHtml += `<td class="py-1.5 px-0.5 border-r border-gray-100 bg-red-50/5 text-red-400 font-bold opacity-60 text-[9px] sm:text-[10px]">✘</td>`;
-                    }
-                });
-                rowHtml += `<td class="py-1.5 px-0.5 text-center font-black bg-emerald-50 text-emerald-800">${lunasCount}/${urutanBulanDinamis.length}</td>`;
-                tr.innerHTML = rowHtml; tbody.appendChild(tr);
-            });
-        }
-
-        function jalankanEksporTabelKlusterKeExcel() {
-            const prefix = document.getElementById('kluster-title-letter').textContent;
-            if (databaseBlokMaster.length === 0) {
-                showToast("Tidak ada data warga untuk diekspor.", true);
-                return;
-            }
-
-            const filteredUnits = databaseBlokMaster.filter(item => item.id_kode.toString().toUpperCase().startsWith(prefix));
-            filteredUnits.sort((a, b) => a.id_kode.localeCompare(b.id_kode));
-
-            if (filteredUnits.length === 0) {
-                showToast(`Tidak ada data untuk Kluster ${prefix}.`, true);
-                return;
-            }
-
-            let htmlExcel = `
-                <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-                <head>
-                    <!--[if gte mso 9]>
-                    <xml>
-                        <x:ExcelWorkbook>
-                            <x:ExcelWorksheets>
-                                <x:ExcelWorksheet>
-                                    <x:Name>Rekap Kluster ${prefix}</x:Name>
-                                    <x:WorksheetOptions>
-                                        <x:DisplayGridlines/>
-                                    </x:WorksheetOptions>
-                                </x:ExcelWorksheet>
-                            </x:ExcelWorksheets>
-                        </x:ExcelWorkbook>
-                    </xml>
-                    <![endif]-->
-                    <meta charset="utf-8">
-                    <style>
-                        table { border-collapse: collapse; font-family: Arial, sans-serif; font-size: 11pt; }
-                        th { background-color: #0d9488; color: #ffffff; font-weight: bold; border: 1px solid #cbd5e1; text-align: center; padding: 6px; }
-                        td { border: 1px solid #e2e8f0; padding: 6px; text-align: center; }
-                        .text-left { text-align: left; font-weight: bold; }
-                        .bg-title { font-size: 14pt; font-weight: bold; text-align: left; border: none; padding-bottom: 10px; }
-                        .lunas-cell { color: #16a34a; font-weight: bold; background-color: #f0fdf4; }
-                        .belum-cell { color: #dc2626; font-weight: bold; background-color: #fef2f2; }
-                        .total-cell { background-color: #f0fdfa; font-weight: bold; color: #0f766e; }
-                    </style>
-                </head>
-                <body>
-                    <table>
-                        <tr>
-                            <td colspan="${urutanBulanDinamisGlobalUntukEkspor.length + 3}" class="bg-title">
-                                REKAPITULASI IURAN IPL WARGA KLUSTER ${prefix} - PERUMAHAN BALE TIRTAWANA
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>No. Kode</th>
-                            <th style="text-align: left; min-w-width: 200px;">Nama Pelanggan / Blok</th>
-            `;
-
-            urutanBulanDinamisGlobalUntukEkspor.forEach(b => {
-                htmlExcel += `<th>${b.labelPanjang}</th>`;
-            });
-            htmlExcel += `<th style="background-color: #f0fdfa; color: #0f766e;">Total Lunas</th></tr>`;
-
-            filteredUnits.forEach(unit => {
-                htmlExcel += `
-                    <tr>
-                        <td style="font-family: monospace; font-weight: bold; background-color: #f8fafc;">${unit.id_kode}</td>
-                        <td class="text-left">${unit.nama_blok}</td>
-                `;
-
-                let lunasCount = 0;
-                urutanBulanDinamisGlobalUntukEkspor.forEach(b => {
-                    const matchTx = unit.transaksi_list.find(tx => tx.bulan_idx === b.idx);
-                    if (matchTx && matchTx.lunas) {
-                        lunasCount++;
-                        htmlExcel += `<td class="lunas-cell">LUNAS</td>`;
-                    } else {
-                        htmlExcel += `<td class="belum-cell">BELUM BAYAR</td>`;
-                    }
-                });
-
-                htmlExcel += `<td class="total-cell">${lunasCount} / ${urutanBulanDinamisGlobalUntukEkspor.length} Bulan</td></tr>`;
-            });
-
-            htmlExcel += `</table></body></html>`;
-
-            const dataBlob = new Blob([htmlExcel], { type: 'application/vnd.ms-excel' });
-            const urlUnduh = URL.createObjectURL(dataBlob);
-            
-            const tautanJangkar = document.createElement('a');
-            tautanJangkar.href = urlUnduh;
-            
-            const startStr = urutanBulanDinamisGlobalUntukEkspor[0].labelSingkat.replace(" ", "");
-            const endStr = urutanBulanDinamisGlobalUntukEkspor[urutanBulanDinamisGlobalUntukEkspor.length - 1].labelSingkat.replace(" ", "");
-            tautanJangkar.download = `IPL_BaleTirtawana_Kluster_${prefix}_(${startStr}_to_${endStr}).xls`;
-            
-            document.body.appendChild(tautanJangkar);
-            tautanJangkar.click();
-            document.body.removeChild(tautanJangkar);
-            
-            showToast(`Sukses mengunduh laporan Excel Kluster ${prefix}!`);
-        }
-
-        function formatRupiah(angka) { if (!angka) return "0"; return Number(angka).toLocaleString('id-ID'); }
-        function closeModal() { document.getElementById('detail-modal').classList.add('hidden'); }
-        function tutupLaporanKluster() { document.getElementById('kluster-modal').classList.add('hidden'); }
-        
-        function showToast(message, isError = false) {
-            const toast = document.getElementById('toast-notification');
-            if(!toast) return;
-            document.getElementById('toast-message').textContent = message;
-            toast.className = `fixed bottom-5 right-5 left-5 sm:left-auto ${isError ? 'bg-red-600' : 'bg-gray-900'} text-white px-4 py-3 rounded-xl shadow-2xl flex items-center justify-between space-x-4 z-50`;
-            toast.classList.remove('hidden'); setTimeout(() => { toast.classList.add('hidden'); }, 4000);
-        }
-        
-        function dismissToast() { document.getElementById('toast-notification').classList.add('hidden'); }
-
-        const pemetaanBulanNama = { "jan": "Januari", "feb": "Februari", "mar": "Maret", "apr": "April", "mei": "Mei", "jun": "Juni", "jul": "Juli", "agu": "Agustus", "sep": "September", "okt": "Oktober", "nop": "November", "nov": "November", "des": "Desember" };
-        const pemetaanBulanAngka = { "jan": "01", "feb": "02", "mar": "03", "apr": "04", "mei": "05", "jun": "06", "jul": "07", "agu": "08", "sep": "09", "okt": "10", "nop": "11", "nov": "11", "des": "12" };
-        const singkatanBulanNama = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
-    </script>
-</body>
-</html>
